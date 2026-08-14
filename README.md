@@ -1,13 +1,12 @@
 # ryo-o.me — おしゃん個人ブログ
 
-Astro（コンテンツ）+ TanStack（読書の対話島）+ Cloudflare（エッジ）の個人サイト。
+Astro（コンテンツ）+ Cloudflare（エッジ）の個人サイト。
 
 ## 特徴
 
 - **Life Changelog** をホームの主役に
 - 記事は 65ch 前後の読書レイアウト + Reading Rail / Focus (`R`) / 動的残り時間
-- Quiet Letter（いいね数なし）・Recall Strip・Margin Whisper
-- Serendipity Walk（人気順ではない偶然の一本）
+- Recall Strip・Margin Whisper
 - Modest Subscribe（RSS 先行）
 
 ## 必要環境
@@ -37,10 +36,6 @@ pnpm dev:stop
 ```
 
 `pnpm dev:logs` はバックグラウンドサーバーのログを追従する（`astro dev logs --follow`）。未起動なら非ゼロで終了する。
-
-## Cloudflare（任意）
-
-`wrangler.jsonc` の D1 / KV ID はプレースホルダです。ローカルの `pnpm dev` ではページはそのまま動き、Quiet Letter（`POST /api/letters`）はワーカー環境が空なら **そのプロセス内のメモリ** に保存します（再起動や別 isolate では消え、本番の永続化ではない）。本番には本物の D1 / KV を結びます。`GET /api/letters` は POST 専用のため 405 を返します。
 
 ## コンテンツ
 

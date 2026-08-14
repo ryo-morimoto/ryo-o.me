@@ -3,13 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostHeader from '../../components/PostHeader.astro';
 import PostNav from '../../components/PostNav.astro';
 import ThreadOfSelf from '../../components/ThreadOfSelf.astro';
-import { ReadingRail } from '../../islands/ReadingRail';
-import { FocusModeToggle } from '../../islands/FocusModeToggle';
-import { RemainingTime } from '../../islands/RemainingTime';
-import { QuietLetter } from '../../islands/QuietLetter';
-import { RecallStrip } from '../../islands/RecallStrip';
-import { MarginWhisper } from '../../islands/MarginWhisper';
-import { SerendipityWalk } from '../../islands/SerendipityWalk';
+import ReadingRail from '../../islands/ReadingRail.astro';
+import FocusModeToggle from '../../islands/FocusModeToggle.astro';
+import RemainingTime from '../../islands/RemainingTime.astro';
+import RecallStrip from '../../islands/RecallStrip.astro';
+import MarginWhisper from '../../islands/MarginWhisper.astro';
 import {
   adjacentPosts,
   getPublishedPosts,
@@ -39,10 +37,10 @@ const related = relatedPosts(posts, post);
   <article class="site-shell post">
     <PostHeader post={post} minutes={minutes} />
     <p class="live-meta site-chrome">
-      <RemainingTime client:load totalMinutes={minutes} />
+      <RemainingTime totalMinutes={minutes} />
     </p>
 
-    <ReadingRail client:load />
+    <ReadingRail />
 
     <div class="prose" id="article-body">
       <Content />
@@ -54,14 +52,12 @@ const related = relatedPosts(posts, post);
       )
     }
 
-    <RecallStrip client:idle postId={post.id} />
-    <QuietLetter client:idle postId={post.id} />
-    <SerendipityWalk client:idle excludeId={post.id} />
+    <RecallStrip postId={post.id} />
     <PostNav prev={prev} next={next} related={related} />
   </article>
 
-  <FocusModeToggle client:load />
-  <MarginWhisper client:idle postId={post.id} />
+  <FocusModeToggle />
+  <MarginWhisper postId={post.id} />
 </BaseLayout>
 
 <style is:global>

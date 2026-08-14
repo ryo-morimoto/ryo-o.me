@@ -1,0 +1,98 @@
+---
+const KEY = 'oshian:focus-mode';
+---
+
+<focus-mode-toggle data-storage-key={KEY}>
+  <button type="button" class="focus-btn site-chrome" aria-pressed="false" title="Focus mode (R)">
+    <span class="label">Focus</span>
+    <kbd>R</kbd>
+  </button>
+</focus-mode-toggle>
+
+<script>
+  class FocusModeToggleEl extends HTMLElement {
+    #button: HTMLButtonElement | null = null;
+    #onKey: ((e: KeyboardEvent) => void) | null = null;
+
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = '1';
+      this.#button = this.querySelector('button');
+      const label = this.querySelector('.label');
+      const key = this.dataset.storageKey ?? 'oshian:focus-mode';
+      if (!this.#button || !(label instanceof HTMLElement)) return;
+
+      const apply = (on: boolean) => {
+        document.body.classList.toggle('is-focus-mode', on);
+        sessionStorage.setItem(key, on ? '1' : '0');
+        this.#button?.setAttribute('aria-pressed', on ? 'true' : 'false');
+        label.textContent = on ? 'Exit focus' : 'Focus';
+      };
+
+      const toggle = () => {
+        apply(sessionStorage.getItem(key) !== '1');
+      };
+
+      apply(sessionStorage.getItem(key) === '1');
+
+      this.#button.addEventListener('click', toggle);
+      this.#onKey = (e: KeyboardEvent) => {
+        const t = e.target as HTMLElement | null;
+        if (!t) return;
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) return;
+        if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          toggle();
+        }
+      };
+      window.addEventListener('keydown', this.#onKey);
+    }
+
+    disconnectedCallback() {
+      if (this.#onKey) window.removeEventListener('keydown', this.#onKey);
+    }
+  }
+
+  if (!customElements.get('focus-mode-toggle')) {
+    customElements.define('focus-mode-toggle', FocusModeToggleEl);
+  }
+</script>
+
+<style>
+  focus-mode-toggle {
+    display: contents;
+  }
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 45;
+    border: 1px solid var(--color-line);
+    background: color-mix(in oklab, var(--color-bg-elevated) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    padding: 0.55rem 0.85rem;
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition:
+      opacity var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out);
+  }
+
+  .focus-btn kbd {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.3rem;
+    padding: 0.05rem 0.3rem;
+  }
+
+  .focus-btn[aria-pressed='true'] {
+    color: var(--color-accent-deep);
+    border-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  }
+</style>

@@ -17,7 +17,7 @@ Do not run Launch `pnpm dev` and `pnpm ensure-dev` at the same time (both use po
 
 If `pnpm install --frozen-lockfile` fails, the lockfile is out of date — regenerate with `pnpm install` and commit `pnpm-lock.yaml` (do not commit a placeholder).
 
-`pnpm-workspace.yaml` sets `minimumReleaseAge: 0` so same-day releases (Astro / TanStack) still install. Treat lockfile reviews as the supply-chain gate.
+`pnpm-workspace.yaml` sets `minimumReleaseAge: 0` so same-day releases (Astro) still install. Treat lockfile reviews as the supply-chain gate.
 
 ## Agent / background server
 

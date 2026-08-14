@@ -1,15 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChangelogList from '../components/ChangelogList.astro';
-import { SerendipityWalk } from '../islands/SerendipityWalk';
-import { getChangelog, getPublishedPosts, pickSerendipity } from '../lib/content';
+import { getChangelog } from '../lib/content';
 import { site } from '../lib/site';
 
 export const prerender = true;
 
 const entries = await getChangelog();
-const posts = await getPublishedPosts();
-const today = pickSerendipity(posts);
 ---
 
 <BaseLayout title={site.title} description={site.description}>
@@ -26,24 +23,6 @@ const today = pickSerendipity(posts);
     </div>
     <ChangelogList entries={entries} />
   </section>
-
-  {
-    today && (
-      <section class="site-shell today-section site-chrome">
-        <p class="today-label">Today’s walk</p>
-        <a class="today-link" href={`/posts/${today.id}`}>
-          <span class="emoji" aria-hidden="true">
-            {today.data.emoji ?? '✦'}
-          </span>
-          <span>
-            <span class="t">{today.data.title}</span>
-            <span class="d">{today.data.description}</span>
-          </span>
-        </a>
-        <SerendipityWalk client:idle excludeId={today.id} />
-      </section>
-    )
-  }
 </BaseLayout>
 
 <style>
@@ -103,46 +82,5 @@ const today = pickSerendipity(posts);
     margin: 0;
     max-width: 36ch;
     color: var(--color-ink-soft);
-  }
-
-  .today-section {
-    padding-bottom: var(--space-8);
-  }
-
-  .today-label {
-    margin: 0 0 var(--space-3);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent-deep);
-  }
-
-  .today-link {
-    display: flex;
-    gap: var(--space-4);
-    text-decoration: none;
-    color: inherit;
-    align-items: flex-start;
-    margin-bottom: var(--space-4);
-  }
-
-  .today-link .emoji {
-    font-size: 2rem;
-    line-height: 1;
-  }
-
-  .today-link .t {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    letter-spacing: -0.02em;
-  }
-
-  .today-link .d {
-    display: block;
-    color: var(--color-ink-soft);
-    max-width: 40ch;
-    margin-top: var(--space-1);
   }
 </style>

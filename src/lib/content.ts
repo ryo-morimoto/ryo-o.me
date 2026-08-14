@@ -1,5 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+export { readingMinutes } from './reading.ts';
+
 export type Post = CollectionEntry<'posts'>;
 export type ChangelogEntry = CollectionEntry<'changelog'>;
 export type ChangelogKind = ChangelogEntry['data']['kind'];
@@ -20,15 +22,6 @@ export function formatDate(date: Date, locale = 'ja-JP'): string {
     month: 'short',
     day: 'numeric',
   }).format(date);
-}
-
-export function readingMinutes(body: string): number {
-  const text = body
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/[#>*_\-\`\[\]()]/g, ' ')
-    .replace(/\s+/g, '');
-  const chars = [...text].length;
-  return Math.max(1, Math.ceil(chars / 500));
 }
 
 export function estimateWords(body: string): number {
@@ -60,34 +53,6 @@ export function relatedPosts(posts: Post[], current: Post, limit = 3): Post[] {
     .map((x) => x.post);
 
   return [...byId, ...byTag].slice(0, limit);
-}
-
-/** Lightweight serendipity: season + tag distance + weekday salt (no popularity). */
-export function pickSerendipity(posts: Post[], excludeId?: string): Post | undefined {
-  const pool = posts.filter((p) => p.id !== excludeId);
-  if (pool.length === 0) return undefined;
-
-  const now = new Date();
-  const season = Math.floor(now.getMonth() / 3);
-  const daySalt = now.getFullYear() * 1000 + now.getMonth() * 40 + now.getDate();
-
-  const scored = pool.map((p, i) => {
-    const month = p.data.date.getMonth();
-    const postSeason = Math.floor(month / 3);
-    const seasonScore = postSeason === season ? 3 : Math.abs(postSeason - season) === 2 ? 1 : 0;
-    const tagScore = Math.min(2, p.data.tags.length);
-    const hash = (hashString(p.id) + daySalt + i * 17) % 97;
-    return { post: p, score: seasonScore * 10 + tagScore * 3 + (hash % 7) };
-  });
-
-  scored.sort((a, b) => b.score - a.score);
-  return scored[0]?.post;
-}
-
-function hashString(input: string): number {
-  let h = 0;
-  for (let i = 0; i < input.length; i++) h = (h * 31 + input.charCodeAt(i)) | 0;
-  return Math.abs(h);
 }
 
 export const kindLabel: Record<ChangelogKind, string> = {
