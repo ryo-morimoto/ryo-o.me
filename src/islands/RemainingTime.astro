@@ -1,0 +1,65 @@
+---
+interface Props {
+  totalMinutes: number;
+  contentSelector?: string;
+}
+
+const { totalMinutes, contentSelector = '#article-body' } = Astro.props;
+---
+
+<remaining-time data-total-minutes={String(totalMinutes)} data-content-selector={contentSelector}>
+  <span class="remaining-time">{totalMinutes} min read</span>
+</remaining-time>
+
+<style>
+  remaining-time {
+    display: contents;
+  }
+</style>
+
+<script>
+  class RemainingTimeEl extends HTMLElement {
+    #label: HTMLElement | null = null;
+    #onScroll: (() => void) | null = null;
+
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = '1';
+      this.#label = this.querySelector('.remaining-time');
+      const totalMinutes = Number(this.dataset.totalMinutes ?? '1');
+      const selector = this.dataset.contentSelector ?? '#article-body';
+      const root = document.querySelector(selector);
+      if (!(root instanceof HTMLElement) || !this.#label) return;
+
+      const update = () => {
+        if (!this.#label) return;
+        const rect = root.getBoundingClientRect();
+        const total = Math.max(root.scrollHeight - window.innerHeight, 1);
+        const traveled = Math.min(Math.max(-rect.top, 0), total);
+        const ratio = traveled / total;
+        if (ratio < 0.03) {
+          this.#label.textContent = `${totalMinutes} min read`;
+          return;
+        }
+        if (ratio > 0.9) {
+          this.#label.textContent = 'Almost done';
+          return;
+        }
+        const left = Math.max(1, Math.ceil(totalMinutes * (1 - ratio)));
+        this.#label.textContent = `~${left} min left`;
+      };
+
+      this.#onScroll = update;
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+    }
+
+    disconnectedCallback() {
+      if (this.#onScroll) window.removeEventListener('scroll', this.#onScroll);
+    }
+  }
+
+  if (!customElements.get('remaining-time')) {
+    customElements.define('remaining-time', RemainingTimeEl);
+  }
+</script>

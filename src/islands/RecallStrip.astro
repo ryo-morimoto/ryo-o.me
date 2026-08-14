@@ -1,0 +1,99 @@
+---
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props;
+---
+
+<recall-strip data-post-id={postId}>
+  <section class="recall" aria-label="3行で言うと">
+    <h2>3行で言うと？</h2>
+    <p class="hint">任意です。あなたの言葉だけが、この端末に残ります。</p>
+    <textarea rows="3" placeholder="この記事を、自分の言葉で短くすると…"></textarea>
+    <button type="button">この端末に残す</button>
+    <p class="ok" role="status" hidden>残しました。</p>
+  </section>
+</recall-strip>
+
+<script>
+  class RecallStripEl extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = '1';
+      const postId = this.dataset.postId;
+      const textarea = this.querySelector('textarea');
+      const button = this.querySelector('button');
+      const ok = this.querySelector('.ok');
+      if (!postId || !(textarea instanceof HTMLTextAreaElement) || !(button instanceof HTMLButtonElement) || !(ok instanceof HTMLElement)) {
+        return;
+      }
+
+      const key = `oshian:recall:${postId}`;
+      textarea.value = localStorage.getItem(key) ?? '';
+
+      textarea.addEventListener('input', () => {
+        ok.hidden = true;
+      });
+
+      button.addEventListener('click', () => {
+        localStorage.setItem(key, textarea.value);
+        ok.hidden = false;
+      });
+    }
+  }
+
+  if (!customElements.get('recall-strip')) {
+    customElements.define('recall-strip', RecallStripEl);
+  }
+</script>
+
+<style>
+  recall-strip {
+    display: contents;
+  }
+
+  .recall {
+    margin: 2.5rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .recall h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.1rem;
+  }
+
+  .hint,
+  .ok {
+    margin: 0 0 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .ok {
+    color: var(--color-accent-deep);
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    font: inherit;
+    background: var(--color-bg-elevated);
+    color: inherit;
+    resize: vertical;
+    margin-bottom: 0.6rem;
+  }
+
+  button {
+    border: 1px solid var(--color-line);
+    background: transparent;
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    font: inherit;
+    cursor: pointer;
+    color: var(--color-ink-soft);
+  }
+</style>

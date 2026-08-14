@@ -1,9 +1,6 @@
 /// <reference types="astro/client" />
 
 type Env = {
-  DB?: D1Database;
-  KV?: KVNamespace;
-  SESSION?: KVNamespace;
   ASSETS?: Fetcher;
 };
 

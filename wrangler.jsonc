@@ -10,26 +10,5 @@
   },
   "observability": {
     "enabled": true
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "oshian-blog",
-      "database_id": "00000000-0000-0000-0000-000000000001",
-      "preview_database_id": "local-oshian-blog",
-      "migrations_dir": "migrations"
-    }
-  ],
-  "kv_namespaces": [
-    {
-      "binding": "KV",
-      "id": "00000000-0000-0000-0000-000000000002",
-      "preview_id": "local-oshian-kv"
-    },
-    {
-      "binding": "SESSION",
-      "id": "00000000-0000-0000-0000-000000000003",
-      "preview_id": "local-oshian-session"
-    }
-  ]
+  }
 }
