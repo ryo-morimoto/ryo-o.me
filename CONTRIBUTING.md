@@ -1,27 +1,38 @@
 # Contributing
 
-## Cold start
+## コールドスタート
 
-1. Install Node.js `>=24` (nvm / fnm reads `.nvmrc` → `24.19.0`).
-2. Enable pnpm 11 if needed: `corepack enable` (lockfile expects `pnpm@11.21.0`).
-3. From the repository root:
+1. Node.js `>=24` を入れる（nvm / fnm は `.nvmrc` の `24.19.0` を読む）。
+2. 必要なら `corepack enable` で pnpm 11 を有効にする（lockfile は `pnpm@11.21.0`）。
+3. リポジトリの根で次を実行する。
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm dev
+pnpm ensure-dev
 ```
 
-The app listens on http://localhost:4321/. No environment file is required.
+http://localhost:4321/ で開く。
+環境ファイルは要らない。
 
-Do not run Launch `pnpm dev` and `pnpm ensure-dev` at the same time (both use port 4321).
+Launch の `pnpm dev` と `pnpm ensure-dev` は同時に動かさない。
+どちらも 4321 を使う。
 
-If `pnpm install --frozen-lockfile` fails, the lockfile is out of date — regenerate with `pnpm install` and commit `pnpm-lock.yaml` (do not commit a placeholder).
+`pnpm install --frozen-lockfile` が失敗したら、lockfile が古い。
+`pnpm install` で作り直し、`pnpm-lock.yaml` をコミットする。
+プレースホルダの lockfile はコミットしない。
 
-`pnpm-workspace.yaml` sets `minimumReleaseAge: 0` so same-day releases (Astro) still install. Treat lockfile reviews as the supply-chain gate.
+`pnpm-workspace.yaml` の `minimumReleaseAge` は `0` である。
+当日の Astro リリースも入る。
+サプライチェーンの門は lockfile のレビューである。
 
-## Agent / background server
+## エージェントとバックグラウンドサーバー
 
-`astro` is a local binary. Use package scripts, not a global `astro` on PATH (ignore `astro dev stop|status|logs` printed by the Astro CLI). `pnpm dev:status` exits 0 even when idle — start with `pnpm ensure-dev`:
+`astro` はローカルのバイナリである。
+PATH のグローバル `astro` は使わない。
+Astro CLI が出す `astro dev stop|status|logs` は無視する。
+
+`pnpm dev:status` は止まっていても exit 0 である。
+起動は `pnpm ensure-dev` である。
 
 ```sh
 pnpm ensure-dev
@@ -29,9 +40,10 @@ pnpm dev:logs
 pnpm dev:stop
 ```
 
-`pnpm dev:logs` follows logs (`astro dev logs --follow`) and does not return until the server stops or you interrupt it.
+`pnpm dev:logs` はログを追う。
+サーバーが止まるか、中断するまで戻らない。
 
-## Checks
+## 検査
 
 ```sh
 pnpm test
@@ -39,8 +51,10 @@ pnpm typecheck
 pnpm build
 ```
 
-CI (`.github/workflows/ci.yml`, job `ci`) runs the same three commands after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
+CI（`.github/workflows/ci.yml` の job `ci`）は、`pnpm install --frozen-lockfile` のあと、同じ三つを走らせる。
+`dist/` に a11y の JSON が無いと job は落ちる。
 
-`pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
+`pnpm check` と `astro check` は使わない。
+`@astrojs/check` が TypeScript 6 の programmatic API を要求し、このリポジトリは TypeScript 7 をピンしているためである。
 
-`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`.
+`pnpm typecheck` は先に `astro sync` を走らせ、gitignore された `.astro/types.d.ts` を作ってから `tsc --noEmit` する。
