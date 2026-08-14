@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-14T21:24:00.000Z",
+  "generatedAt": "2026-08-14T21:50:00.000Z",
   "title": "Design System: ryo",
   "extensions": {
     "colorMeta": {
@@ -51,32 +51,34 @@
     }
   ],
   "narrative": {
-    "northStar": "活版 活字見本帳",
-    "overview": "The site is a foundry specimen sheet hung in north light: zinc plate, sumi, one vermilion proof mark. Changelog entries are cuts of the same face, largest first. The old mist-teal optical-serif room is an anti-reference.",
+    "northStar": "活版 活字見本帳（現行実装）",
+    "overview": "フロントマターの色と書体は、いま画面に出ている実装の記録である。\n亜鉛の地、墨、朱の校正印、見出しの明朝（Kaisei Decol）がそれである。\n\nPRODUCT.md は別の拘束を置いている。\n基調は無彩色、アクセントは黄色一色、本文はシステムフォント、明朝は採用しない。\n霧とティールの初版と、この見本帳そのものが反参照である。\n\n新しい面では PRODUCT.md が勝つ。\n黄の HEX と見出し書体名は未決定なので、このファイルに仮の黄は書かない。",
     "keyCharacteristics": [
-      "Zinc ground, sumi ink, vermilion proof only",
-      "Kaisei Decol display / BIZ UDPGothic body / Martian Mono point sizes",
-      "Off-centre 72–6pt rail as navigation",
-      "Square stamps, no pills, no drop shadows",
-      "Focus (R) rakes light; it does not add chrome"
+      "現行：亜鉛の地、墨、朱は校正印だけ",
+      "現行：見出し Kaisei Decol、本文 BIZ UDPGothic、ラベル Martian Mono",
+      "現行：左の 72–6pt レールがナビ",
+      "角は 0。ドロップシャドウはない",
+      "新しい面：無彩色と黄の面、本文はシステムフォント（PRODUCT.md）"
     ],
     "rules": [
-      { "name": "The One Impression Rule", "body": "Do not polish entries into plaza metrics.", "section": "colors" },
-      { "name": "The One Vermilion Rule", "body": "Accent is a proof mark, never a fill.", "section": "colors" },
-      { "name": "The Measure Rule", "body": "Reading copy stays near 65ch.", "section": "typography" },
-      { "name": "The Staircase Rule", "body": "Recency is type size, not a badge.", "section": "typography" },
-      { "name": "The Flat Plate Rule", "body": "No glass pills, no drop shadows.", "section": "elevation" }
+      { "name": "The Shipped Plate Rule", "body": "ここの HEX は現行実装である。新しい面で朱をブランドとして増やさない。", "section": "colors" },
+      { "name": "The Yellow Surface Rule", "body": "決まっている黄は、ライトでは文字色にしない。面（ハイライト、罫線、ホバー背景）に使う。値は未決定。", "section": "colors" },
+      { "name": "The Measure Rule", "body": "本文の行長は約 65ch に留める。", "section": "typography" },
+      { "name": "The Staircase Rule", "body": "新しさはタイプサイズで示す。バッジでは示さない。", "section": "typography" },
+      { "name": "The Flat Plate Rule", "body": "ガラスのピルもドロップシャドウも置かない。", "section": "elevation" }
     ],
     "dos": [
-      "Do let recency live in type size.",
-      "Do keep vermilion scarce.",
-      "Do rake light for Focus, hide chrome."
+      "Do 現行画面を直すときは、ここのトークンを使う。",
+      "Do 新しい面では PRODUCT.md の無彩色と黄、本文システムフォントに従う。",
+      "Do 本文の行長を約 65ch に留める。",
+      "Do 新しさをタイプサイズで示す。"
     ],
     "donts": [
-      "Don't restore mist, teal, Fraunces, or IBM Plex.",
-      "Don't use pills or equal-size cards as the page structure.",
-      "Don't add like counts or rank chrome.",
-      "Don't put an eyebrow above a heading."
+      "Don't 霧、ティール、Fraunces を戻す。",
+      "Don't 新しい面で Kaisei Decol や朱をブランドとして増やす。",
+      "Don't ピルや同じ大きさのカードでページを組む。",
+      "Don't いいねや順位のクロムを足す。",
+      "Don't 見出しの上にアイブロウを置く。"
     ]
   }
 }
