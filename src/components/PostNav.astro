@@ -1,0 +1,135 @@
+---
+import { formatDate, type Post } from '../lib/content';
+
+interface Props {
+  prev?: Post;
+  next?: Post;
+  related: Post[];
+}
+
+const { prev, next, related } = Astro.props;
+---
+
+<section class="after">
+  <div class="adjacent">
+    {
+      prev && (
+        <a class="adj prev" href={`/posts/${prev.id}`}>
+          <span class="dir">Older</span>
+          <span class="t">{prev.data.title}</span>
+        </a>
+      )
+    }
+    {
+      next && (
+        <a class="adj next" href={`/posts/${next.id}`}>
+          <span class="dir">Newer</span>
+          <span class="t">{next.data.title}</span>
+        </a>
+      )
+    }
+  </div>
+
+  {
+    related.length > 0 && (
+      <div class="related">
+        <h2>近くの記事</h2>
+        <ul>
+          {related.map((post) => (
+            <li>
+              <a href={`/posts/${post.id}`}>
+                <span class="rt">{post.data.title}</span>
+                <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .after {
+    margin-top: var(--space-8);
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .adjacent {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 720px) {
+    .adjacent {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .adj {
+    display: grid;
+    gap: var(--space-1);
+    text-decoration: none;
+    color: inherit;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .next {
+    text-align: right;
+  }
+
+  .dir {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .t {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+  }
+
+  .related h2 {
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    margin: 0 0 var(--space-3);
+  }
+
+  .related ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .related a {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: var(--space-3);
+  }
+
+  .rt {
+    font-family: var(--font-display);
+  }
+
+  time {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+</style>

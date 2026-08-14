@@ -1,0 +1,51 @@
+---
+interface Props {
+  text: string;
+  relatedHref?: string;
+}
+
+const { text, relatedHref } = Astro.props;
+---
+
+<aside class="thread" aria-label="この頃の自分">
+  <p class="label">この頃の自分</p>
+  <p class="text">{text}</p>
+  {
+    relatedHref && (
+      <p class="link">
+        <a href={relatedHref}>関連するログへ</a>
+      </p>
+    )
+  }
+</aside>
+
+<style>
+  .thread {
+    margin: var(--space-8) 0;
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .label {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-deep);
+  }
+
+  .text {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+
+  .link {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+  }
+</style>
