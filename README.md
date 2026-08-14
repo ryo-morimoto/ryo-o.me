@@ -12,8 +12,8 @@ Astro（コンテンツ）+ TanStack（読書の対話島）+ Cloudflare（エ�
 
 ## 必要環境
 
-- Node.js `>=24`（`.nvmrc` / `.node-version`）
-- pnpm `11`（`package.json` の `packageManager`。未導入なら `corepack enable`）
+- Node.js `>=24`（ピンは `.nvmrc` / `.node-version` の `24.19.0`）
+- pnpm `11`（ピンは `package.json` の `packageManager`: `pnpm@11.21.0`。未導入なら `corepack enable`）
 
 シークレット、`.env`、Docker、Cloudflare アカウントは **ローカル閲覧には不要** です。
 
@@ -26,6 +26,8 @@ pnpm dev
 
 ブラウザで http://localhost:4321/ を開く。
 
+Launch（`.vscode/launch.json` の `pnpm dev`）と `pnpm ensure-dev` は同時に使わない。どちらも 4321 を取る。
+
 エージェント向け（PATH に `astro` は置かない。CLI が出す `astro dev stop` も使わず、次のスクリプトだけ使う）。`pnpm dev:status` はサーバー未起動でも exit 0 なので、起動判定は `pnpm ensure-dev` を使う:
 
 ```sh
@@ -34,11 +36,11 @@ pnpm dev:logs
 pnpm dev:stop
 ```
 
-VS Code / Cursor の Launch 設定（`.vscode/launch.json`）も同じ `pnpm` 経由です。
+`pnpm dev:logs` はバックグラウンドサーバーのログを追従する（`astro dev logs --follow`）。未起動なら非ゼロで終了する。
 
 ## Cloudflare（任意）
 
-`wrangler.jsonc` の D1 / KV ID はプレースホルダです。ローカルの `astro dev` ではページはそのまま動き、Quiet Letter（`POST /api/letters`）はワーカー環境が空ならインメモリに保存します。本番の永続化には本物の D1 / KV を結びます。`GET /api/letters` は POST 専用のため 405 を返します。
+`wrangler.jsonc` の D1 / KV ID はプレースホルダです。ローカルの `pnpm dev` ではページはそのまま動き、Quiet Letter（`POST /api/letters`）はワーカー環境が空なら **そのプロセス内のメモリ** に保存します（再起動や別 isolate では消え、本番の永続化ではない）。本番には本物の D1 / KV を結びます。`GET /api/letters` は POST 専用のため 405 を返します。
 
 ## コンテンツ
 

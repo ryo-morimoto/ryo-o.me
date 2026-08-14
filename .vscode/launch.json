@@ -3,7 +3,7 @@
   "configurations": [
     {
       "command": "pnpm dev",
-      "name": "Development server",
+      "name": "Development server (do not combine with pnpm ensure-dev)",
       "request": "launch",
       "type": "node-terminal"
     }

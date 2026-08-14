@@ -4,7 +4,7 @@
     {
       "name": "dev",
       "command": "pnpm ensure-dev && pnpm dev:logs",
-      "description": "Ensure Astro is up on http://localhost:4321, then stream logs"
+      "description": "Ensure Astro is up on http://localhost:4321, then follow logs"
     }
   ]
 }

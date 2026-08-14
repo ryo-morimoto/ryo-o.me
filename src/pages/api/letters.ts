@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { letterBodySchema } from '../../lib/letter';
+import { getPublishedPosts } from '../../lib/content';
+import { letterBodySchema, letterClientError } from '../../lib/letter';
 
 export const prerender = false;
 
@@ -30,6 +31,7 @@ function clientIp(request: Request): string {
 async function rateLimited(env: Env, ip: string): Promise<boolean> {
   const key = `letter-rate:${ip}`;
   if (env.KV) {
+    // KV has no atomic increment; concurrent requests can exceed 8.
     const current = Number((await env.KV.get(key)) ?? '0');
     if (current >= 8) return true;
     await env.KV.put(key, String(current + 1), { expirationTtl: 60 * 60 });
@@ -69,9 +71,14 @@ export const POST: APIRoute = async ({ request }) => {
 
   const parsed = letterBodySchema.safeParse(raw);
   if (!parsed.success) {
-    return Response.json({ error: 'スタンプを選んでください' }, { status: 400 });
+    return Response.json({ error: letterClientError(parsed.error) }, { status: 400 });
   }
   const { postId, stamp } = parsed.data;
+
+  const posts = await getPublishedPosts();
+  if (!posts.some((post) => post.id === postId)) {
+    return Response.json({ error: '記事を指定してください' }, { status: 400 });
+  }
 
   const env = await getEnv();
   const ip = clientIp(request);

@@ -11,8 +11,8 @@
   "observability": {
     "enabled": true
   },
-  // Placeholder resource IDs. Local `astro dev` does not need real D1/KV;
-  // Quiet Letter falls back to in-memory storage when bindings are empty.
+  // Placeholder resource IDs. Local `pnpm dev` does not need real D1/KV;
+  // Quiet Letter falls back to in-process memory when bindings are empty.
   "d1_databases": [
     {
       "binding": "DB",
