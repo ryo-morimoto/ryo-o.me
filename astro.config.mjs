@@ -13,13 +13,11 @@ export default defineConfig({
     imageService: 'compile',
   }),
   markdown: {
+    syntaxHighlight: { type: 'shiki' },
+    shikiConfig: { theme: 'everforest-light' },
     processor: unified({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypeHeadingIds],
-      syntaxHighlight: {
-        type: 'shiki',
-        theme: 'everforest-light',
-      },
     }),
   },
 });

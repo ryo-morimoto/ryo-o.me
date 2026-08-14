@@ -1,3 +1,8 @@
+# Same-day Astro publishes must still install in CI.
+# Lockfile review is the supply-chain gate; do not treat this as a delay policy.
+minimumReleaseAge: 0
 allowBuilds:
   esbuild: true
   sharp: true
+  workerd: true
+  "@esbuild/linux-x64": true

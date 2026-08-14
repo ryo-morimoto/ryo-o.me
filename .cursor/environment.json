@@ -1,0 +1,10 @@
+{
+  "install": "corepack enable && pnpm install --frozen-lockfile",
+  "terminals": [
+    {
+      "name": "dev",
+      "command": "pnpm ensure-dev && pnpm dev:logs",
+      "description": "Ensure Astro is up on http://localhost:4321, then follow logs"
+    }
+  ]
+}

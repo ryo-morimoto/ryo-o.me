@@ -1,7 +1,10 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+export { readingMinutes } from './reading.ts';
+
 export type Post = CollectionEntry<'posts'>;
 export type ChangelogEntry = CollectionEntry<'changelog'>;
+export type ChangelogKind = ChangelogEntry['data']['kind'];
 
 export async function getPublishedPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
@@ -19,15 +22,6 @@ export function formatDate(date: Date, locale = 'ja-JP'): string {
     month: 'short',
     day: 'numeric',
   }).format(date);
-}
-
-export function readingMinutes(body: string): number {
-  const text = body
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/[#>*_\-\`\[\]()]/g, ' ')
-    .replace(/\s+/g, '');
-  const chars = [...text].length;
-  return Math.max(1, Math.ceil(chars / 500));
 }
 
 export function estimateWords(body: string): number {
@@ -61,7 +55,7 @@ export function relatedPosts(posts: Post[], current: Post, limit = 3): Post[] {
   return [...byId, ...byTag].slice(0, limit);
 }
 
-export const kindLabel: Record<string, string> = {
+export const kindLabel: Record<ChangelogKind, string> = {
   post: 'Post',
   release: 'Release',
   talk: 'Talk',
