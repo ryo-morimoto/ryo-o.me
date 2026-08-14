@@ -22,16 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       # Cheap correctness first so a schema/unit failure does not pay for a build.
       - run: pnpm test
       - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm fmt:check
       - run: pnpm build
       - name: Accessibility checklist artifact exists
         run: test -f dist/client/api/a11y-checklist.json || test -f dist/api/a11y-checklist.json

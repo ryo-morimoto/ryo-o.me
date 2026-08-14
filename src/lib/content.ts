@@ -1,31 +1,31 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from "astro:content";
 
-export { readingMinutes } from './reading.ts';
+export { readingMinutes } from "./reading.ts";
 
-export type Post = CollectionEntry<'posts'>;
-export type ChangelogEntry = CollectionEntry<'changelog'>;
-export type ChangelogKind = ChangelogEntry['data']['kind'];
+export type Post = CollectionEntry<"posts">;
+export type ChangelogEntry = CollectionEntry<"changelog">;
+export type ChangelogKind = ChangelogEntry["data"]["kind"];
 
 export async function getPublishedPosts(): Promise<Post[]> {
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export async function getChangelog(): Promise<ChangelogEntry[]> {
-  const entries = await getCollection('changelog');
+  const entries = await getCollection("changelog");
   return entries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-export function formatDate(date: Date, locale = 'ja-JP'): string {
+export function formatDate(date: Date, locale = "ja-JP"): string {
   return new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   }).format(date);
 }
 
 export function estimateWords(body: string): number {
-  return Math.max(1, Math.round(body.replace(/\s+/g, ' ').trim().split(' ').length));
+  return Math.max(1, Math.round(body.replace(/\s+/g, " ").trim().split(" ").length));
 }
 
 export function adjacentPosts(posts: Post[], slug: string) {
@@ -56,10 +56,10 @@ export function relatedPosts(posts: Post[], current: Post, limit = 3): Post[] {
 }
 
 export const kindLabel: Record<ChangelogKind, string> = {
-  post: 'Post',
-  release: 'Release',
-  talk: 'Talk',
-  life: 'Life',
-  note: 'Note',
-  oss: 'OSS',
+  post: "Post",
+  release: "Release",
+  talk: "Talk",
+  life: "Life",
+  note: "Note",
+  oss: "OSS",
 };

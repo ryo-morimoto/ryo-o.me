@@ -29,7 +29,7 @@ Manage a running server with `pnpm dev:stop`. App: http://localhost:4321/
 
 ## Checks
 
-After a code change, run `pnpm verify` (`test` then `typecheck`) before `pnpm build`. Skip the build only when the change cannot affect pages, content collections, islands, or generated JSON. CI still runs all three. Do not add `astro check` (incompatible with TypeScript 7).
+After a code change, run `pnpm verify` (`test`, `typecheck` with `tsc --checkers 4`, `oxlint --type-aware --deny-warnings`, `oxfmt --check`) before `pnpm build`. Skip the build only when the change cannot affect pages, content collections, islands, or generated JSON. CI still runs those plus `pnpm build`. Do not add `astro check` as the type gate. Do not change `--checkers`.
 
 ## Documentation
 

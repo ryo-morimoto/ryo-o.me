@@ -36,15 +36,19 @@ pnpm dev:stop
 Layers (cheapest correctness first):
 
 ```sh
-pnpm verify   # test + typecheck — local / agent inner loop
+pnpm verify   # test + typecheck (TS7 --checkers 4) + oxlint --type-aware + oxfmt --check
 pnpm build    # HTML, content collections, a11y JSON — merge gate
 ```
 
-`pnpm verify` is `pnpm test && pnpm typecheck`. Use it after a code change before paying for a full build. `pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
+`pnpm verify` is `pnpm test && pnpm typecheck && pnpm lint && pnpm fmt:check`. Use it after a code change before paying for a full build.
 
-CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails. There is no linter in this repo; do not add one as a PR-blocking step.
+`pnpm check` / `astro check` is not used as the type gate. The `typescript` package is aliased to `@typescript/typescript6` (JS API + `tsc6`) so tools that still import TypeScript 6 can resolve. Authoritative typecheck is TypeScript 7 via `@typescript/native` (`tsc`).
 
-`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`, including `tests/`.
+`pnpm typecheck` runs `astro sync` then `tsc --noEmit --checkers 4`. The checker count is pinned in the script so local and CI partition files the same way. Do not override `--checkers` on the CLI. `pnpm typecheck:tsc6` runs the TypeScript 6 API compiler for comparison; it is not the merge gate.
+
+`pnpm lint` is `oxlint --type-aware --deny-warnings` (tsgolint). Type-aware linting is a correctness check. `pnpm fmt` / `pnpm fmt:check` is Oxfmt; format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` are not formatted.
+
+CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, `pnpm lint`, `pnpm fmt:check`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
 
 Unit tests cover pure helpers under `src/lib/` (file-level). Content collection schemas, MDX, islands, and generated routes are gated by `pnpm build`, not by the unit suite. If you change `src/content.config.ts`, `src/content/**`, or page/island templates, run `pnpm build` even when `pnpm verify` is green.
 
