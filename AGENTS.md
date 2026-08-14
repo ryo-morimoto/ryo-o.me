@@ -29,7 +29,7 @@ pnpm dev:background
 
 Manage it with `pnpm dev:stop` and `pnpm dev:logs`. App: http://localhost:4321/
 
-Cursor Cloud already starts a foreground `pnpm dev` via `.cursor/environment.json` `terminals`. Do not start a second server on port 4321.
+Cursor Cloud (`.cursor/environment.json` `terminals`) uses the same scripts: status, then `pnpm dev:background` if needed, then `pnpm dev:logs`. Do not start a second server on port 4321.
 
 ## Documentation
 

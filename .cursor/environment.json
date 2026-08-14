@@ -3,8 +3,8 @@
   "terminals": [
     {
       "name": "dev",
-      "command": "pnpm dev",
-      "description": "Foreground Astro dev server (tmux). Do not also run pnpm dev:background on port 4321."
+      "command": "pnpm dev:status >/dev/null 2>&1 || pnpm dev:background; pnpm dev:logs",
+      "description": "Same as AGENTS.md: ensure Astro is up on http://localhost:4321, then stream logs"
     }
   ]
 }
