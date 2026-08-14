@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostHeader from '../../components/PostHeader.astro';
+import PostNav from '../../components/PostNav.astro';
+import ThreadOfSelf from '../../components/ThreadOfSelf.astro';
+import { ReadingRail } from '../../islands/ReadingRail';
+import { FocusModeToggle } from '../../islands/FocusModeToggle';
+import { RemainingTime } from '../../islands/RemainingTime';
+import { QuietLetter } from '../../islands/QuietLetter';
+import { RecallStrip } from '../../islands/RecallStrip';
+import { MarginWhisper } from '../../islands/MarginWhisper';
+import { SerendipityWalk } from '../../islands/SerendipityWalk';
+import {
+  adjacentPosts,
+  getPublishedPosts,
+  readingMinutes,
+  relatedPosts,
+} from '../../lib/content';
+import { render } from 'astro:content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, posts },
+  }));
+}
+
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const minutes = readingMinutes(post.body ?? '');
+const { prev, next } = adjacentPosts(posts, post.id);
+const related = relatedPosts(posts, post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} ogImage={`/og/${post.id}.svg`}>
+  <article class="site-shell post">
+    <PostHeader post={post} minutes={minutes} />
+    <p class="live-meta site-chrome">
+      <RemainingTime client:load totalMinutes={minutes} />
+    </p>
+
+    <ReadingRail client:load />
+
+    <div class="prose" id="article-body">
+      <Content />
+    </div>
+
+    {
+      post.data.threadOfSelf && (
+        <ThreadOfSelf text={post.data.threadOfSelf} relatedHref="/" />
+      )
+    }
+
+    <RecallStrip client:idle postId={post.id} />
+    <QuietLetter client:idle postId={post.id} />
+    <SerendipityWalk client:idle excludeId={post.id} />
+    <PostNav prev={prev} next={next} related={related} />
+  </article>
+
+  <FocusModeToggle client:load />
+  <MarginWhisper client:idle postId={post.id} />
+</BaseLayout>
+
+<style is:global>
+  .post {
+    padding: var(--space-7) 0 var(--space-8);
+    max-width: 760px;
+  }
+
+  .live-meta {
+    margin: -1.5rem 0 2rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .prose {
+    max-width: var(--measure);
+  }
+
+  .prose :is(h2, h3) {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+    margin-top: 2.2em;
+    margin-bottom: 0.7em;
+  }
+
+  .prose h2 {
+    font-size: 1.55rem;
+  }
+
+  .prose h3 {
+    font-size: 1.2rem;
+  }
+
+  .prose p {
+    max-width: var(--measure);
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.2em;
+  }
+
+  .prose blockquote {
+    margin: 1.5em 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+    color: var(--color-ink-soft);
+  }
+
+  .whisper-host {
+    position: relative;
+  }
+
+  .whisper-trigger {
+    position: absolute;
+    left: -1.6rem;
+    top: 0.15em;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-elevated);
+    color: var(--color-muted);
+    font-size: 0.7rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--duration) var(--ease-out);
+  }
+
+  .whisper-host:hover .whisper-trigger,
+  .whisper-trigger:focus-visible {
+    opacity: 1;
+  }
+
+  @media (max-width: 820px) {
+    .whisper-trigger {
+      left: auto;
+      right: -0.2rem;
+      opacity: 0.45;
+    }
+  }
+</style>
