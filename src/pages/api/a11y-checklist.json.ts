@@ -10,7 +10,7 @@ export const GET: APIRoute = async () => {
     { id: 'focus-ring', ok: true, detail: 'Visible :focus-visible styles on interactive elements' },
     { id: 'landmarks', ok: true, detail: 'header/nav/main/footer landmarks' },
     { id: 'motion', ok: true, detail: 'prefers-reduced-motion short-circuits animation duration' },
-    { id: 'contrast-intent', ok: true, detail: 'Ink on mist background; accent used for links/meta' },
+    { id: 'contrast-intent', ok: true, detail: 'Sumi ink on zinc plate; vermilion used for proof marks' },
   ];
 
   return new Response(JSON.stringify({ checks }, null, 2), {

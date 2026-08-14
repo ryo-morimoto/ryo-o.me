@@ -62,37 +62,33 @@ const KEY = 'oshian:focus-mode';
   focus-mode-toggle {
     display: contents;
   }
+
+  .focus-btn {
     position: fixed;
-    left: 1rem;
+    left: calc(var(--rail-w) + 1rem);
     bottom: 1rem;
     z-index: 45;
-    border: 1px solid var(--color-line);
-    background: color-mix(in oklab, var(--color-bg-elevated) 92%, transparent);
-    backdrop-filter: blur(8px);
-    border-radius: 999px;
-    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--color-ink);
+    background: var(--color-proof);
+    padding: 0.5rem 0.75rem;
     display: inline-flex;
     gap: 0.45rem;
     align-items: center;
     font-size: 0.8rem;
-    color: var(--color-ink-soft);
+    color: var(--color-ink);
     cursor: pointer;
-    font-family: var(--font-body);
-    transition:
-      opacity var(--duration) var(--ease-out),
-      transform var(--duration) var(--ease-out);
+    font-family: var(--font-mono);
   }
 
   .focus-btn kbd {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     border: 1px solid var(--color-line);
-    border-radius: 0.3rem;
     padding: 0.05rem 0.3rem;
   }
 
   .focus-btn[aria-pressed='true'] {
-    color: var(--color-accent-deep);
-    border-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
   }
 </style>

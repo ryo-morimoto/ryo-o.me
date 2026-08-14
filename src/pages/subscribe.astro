@@ -23,7 +23,7 @@ export const prerender = true;
   }
   h1 {
     margin: 0 0 var(--space-4);
-    font-size: var(--text-2xl);
+    font-size: var(--text-hero);
   }
   .lead {
     color: var(--color-ink-soft);
@@ -32,16 +32,18 @@ export const prerender = true;
   .rss {
     display: inline-flex;
     margin-top: var(--space-5);
-    padding: 0.65rem 1.1rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--color-accent) 35%, transparent);
-    background: var(--color-accent-soft);
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--color-accent);
+    background: var(--color-proof);
     color: var(--color-accent-deep);
     text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
   }
   .note {
     margin-top: var(--space-6);
     color: var(--color-muted);
     font-size: var(--text-sm);
+    font-family: var(--font-mono);
   }
 </style>

@@ -26,12 +26,12 @@ export const prerender = true;
 <style>
   .about {
     padding: var(--space-8) 0;
-    max-width: 40rem;
+    max-width: var(--measure);
   }
 
   h1 {
     margin: 0 0 var(--space-4);
-    font-size: var(--text-2xl);
+    font-size: var(--text-hero);
   }
 
   .lead {
@@ -44,5 +44,15 @@ export const prerender = true;
     flex-wrap: wrap;
     gap: var(--space-4);
     margin-top: var(--space-6);
+  }
+
+  .links a {
+    display: inline-block;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent-deep);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
   }
 </style>

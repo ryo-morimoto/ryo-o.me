@@ -101,10 +101,9 @@ const { postId } = Astro.props;
     width: min(22rem, calc(100vw - 2rem));
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-line);
-    border-radius: 0.75rem;
+    border-radius: 0;
     padding: 1rem;
     z-index: 60;
-    box-shadow: 0 12px 40px color-mix(in oklab, var(--color-ink) 8%, transparent);
   }
 
   .label {
@@ -116,7 +115,7 @@ const { postId } = Astro.props;
   textarea {
     width: 100%;
     border: 1px solid var(--color-line);
-    border-radius: 0.5rem;
+    border-radius: 0;
     padding: 0.65rem;
     font: inherit;
     background: white;
@@ -131,10 +130,10 @@ const { postId } = Astro.props;
 
   .actions button {
     border: 1px solid var(--color-line);
-    background: var(--color-accent-soft);
-    border-radius: 999px;
+    background: var(--color-proof);
+    border-radius: 0;
     padding: 0.35rem 0.8rem;
-    font: inherit;
+    font-family: var(--font-mono);
     cursor: pointer;
   }
 

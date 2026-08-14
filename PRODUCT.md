@@ -54,7 +54,7 @@ web
 - タグライン: 「静かめの部屋に、考えてたことと作ったものを置いています。」
 - 言語: 日本語（ナビラベルの Home / Posts 等は英語のまま出荷）。
 - 記事内の言及（catnose の Changelog、sizu の静けさ、hiroppy の軽い器）は著者の参照であり、それらの見た目を再現する拘束ではない。
-- 見た目のトークンは `src/styles/tokens.css` にあるが、視覚世界の正本は DESIGN.md ではなく現行実装。init は視覚を決めない。
+- 見た目の正本は現行実装と DESIGN.md。霧とティールの初版は反参照。
 
 ## Evidence on Hand
 

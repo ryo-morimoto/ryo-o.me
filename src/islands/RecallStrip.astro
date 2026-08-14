@@ -78,7 +78,7 @@ const { postId } = Astro.props;
   textarea {
     width: 100%;
     border: 1px solid var(--color-line);
-    border-radius: 0.5rem;
+    border-radius: 0;
     padding: 0.8rem;
     font: inherit;
     background: var(--color-bg-elevated);
@@ -88,12 +88,12 @@ const { postId } = Astro.props;
   }
 
   button {
-    border: 1px solid var(--color-line);
-    background: transparent;
-    border-radius: 999px;
+    border: 1px solid var(--color-ink);
+    background: var(--color-proof);
+    border-radius: 0;
     padding: 0.4rem 0.85rem;
-    font: inherit;
+    font-family: var(--font-mono);
     cursor: pointer;
-    color: var(--color-ink-soft);
+    color: var(--color-ink);
   }
 </style>

@@ -19,6 +19,8 @@ const {
 const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site.url).href;
 const ogUrl = new URL(ogImage, site.url).href;
+
+const sizes = ['72', '48', '36', '24', '18', '14', '12', '10', '8', '6'];
 ---
 
 <!doctype html>
@@ -45,27 +47,36 @@ const ogUrl = new URL(ogImage, site.url).href;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Kaisei+Decol:wght@400;700&family=Martian+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <title>{pageTitle}</title>
   </head>
   <body>
+    <!--
+      THESIS: Home is a foundry specimen of one voice. It refuses equal-card plaza timelines and public counts.
+      OWN-WORLD: Zinc plate #d7dbe0, sumi #12110f, vermilion proof #c42b2b. Kaisei Decol / BIZ UDPGothic / Martian Mono. Off-centre point-size rail; clip-hung sheets; square stamps, no pills, no teal mist.
+      STORY: Visitor reads ryo's time as printed sizes, optionally rakes light with R, leaves no metric.
+      FIRST VIEWPORT: Left rail 72–6pt. Name at display. Changelog descends in size; newest is the display cut.
+      FORM: 活版活字見本帳. Seed 54fdc6a4, candidate 4.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
     <a class="skip-link" href="#main">本文へスキップ</a>
-    <header class="site-header site-chrome">
-      <div class="site-shell header-inner">
-        <a class="brand" href="/">{site.name}</a>
-        <nav class="nav" aria-label="主要">
-          {
-            nav.map((item) => (
-              <a href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>
-                {item.label}
-              </a>
-            ))
-          }
-        </nav>
-      </div>
-    </header>
+    <aside class="foundry-rail site-chrome" aria-label="活字サイズと案内">
+      <p class="rail-mark">{site.name}</p>
+      <ol class="sizes" aria-hidden="true">
+        {sizes.map((pt) => <li>{pt}</li>)}
+      </ol>
+      <nav class="rail-nav" aria-label="主要">
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
     <main id="main">
       <slot />
     </main>
@@ -86,61 +97,77 @@ const ogUrl = new URL(ogImage, site.url).href;
 <style>
   .skip-link {
     position: absolute;
-    left: var(--space-4);
+    left: calc(var(--rail-w) + var(--space-4));
     top: -3rem;
     background: var(--color-ink);
-    color: white;
+    color: var(--color-proof);
     padding: 0.5rem 0.75rem;
     z-index: 100;
-    border-radius: var(--radius-sm);
   }
 
   .skip-link:focus {
     top: var(--space-4);
   }
 
-  .site-header {
-    position: sticky;
+  .foundry-rail {
+    position: fixed;
     top: 0;
+    left: 0;
+    width: var(--rail-w);
+    height: 100vh;
+    border-right: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4) 0.4rem var(--space-5);
     z-index: 40;
-    backdrop-filter: blur(10px);
-    background: color-mix(in oklab, var(--color-bg) 78%, transparent);
-    border-bottom: 1px solid transparent;
+    background: #cfd3d8;
   }
 
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: var(--header-h);
-    gap: var(--space-4);
-  }
-
-  .brand {
+  .rail-mark {
+    margin: 0 0 var(--space-4);
     font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-weight: 600;
+    font-size: 0.95rem;
+    writing-mode: vertical-rl;
+    letter-spacing: 0.12em;
     color: var(--color-ink);
-    text-decoration: none;
-    letter-spacing: -0.03em;
   }
 
-  .nav {
+  .sizes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-muted);
+    display: grid;
+    gap: 0.15rem;
+    flex: 1;
+  }
+
+  .sizes li:first-child {
+    color: var(--color-accent);
+    font-size: 0.7rem;
+  }
+
+  .rail-nav {
     display: flex;
-    gap: var(--space-4);
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
-  .nav a {
-    color: var(--color-ink-soft);
+  .rail-nav a {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
     text-decoration: none;
-    font-size: var(--text-sm);
-    letter-spacing: 0.02em;
+    color: var(--color-ink-soft);
+    writing-mode: vertical-rl;
+    height: 4.6rem;
   }
 
-  .nav a[aria-current='page'],
-  .nav a:hover {
-    color: var(--color-accent-deep);
+  .rail-nav a[aria-current='page'],
+  .rail-nav a:hover {
+    color: var(--color-accent);
   }
 
   .site-footer {
@@ -171,5 +198,42 @@ const ogUrl = new URL(ogImage, site.url).href;
     display: flex;
     gap: var(--space-2);
     align-items: center;
+  }
+
+  @media (max-width: 720px) {
+    .foundry-rail {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 0.65rem 1rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .rail-mark {
+      writing-mode: horizontal-tb;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .sizes {
+      display: none;
+    }
+
+    .rail-nav {
+      flex-direction: row;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .rail-nav a {
+      writing-mode: horizontal-tb;
+      height: auto;
+      font-size: 0.75rem;
+    }
   }
 </style>

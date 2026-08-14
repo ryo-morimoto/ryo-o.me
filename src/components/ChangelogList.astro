@@ -6,12 +6,14 @@ interface Props {
 }
 
 const { entries } = Astro.props;
+
+const cuts = ['2.4rem', '1.85rem', '1.45rem', '1.2rem', '1.05rem', '0.95rem'];
 ---
 
 <ol class="changelog" aria-label="Changelog">
   {
     entries.map((entry, i) => (
-      <li class="changelog-item rise-in" style={`--delay: ${Math.min(i, 8) * 40}ms`}>
+      <li class="changelog-item" style={`--cut: ${cuts[Math.min(i, cuts.length - 1)]}`}>
         <div class="meta">
           <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
           <span class="kind">{kindLabel[entry.data.kind] ?? entry.data.kind}</span>
@@ -36,15 +38,21 @@ const { entries } = Astro.props;
     padding: 0;
     display: grid;
     gap: 0;
-    border-top: 1px solid var(--color-line);
   }
 
   .changelog-item {
     display: grid;
     gap: var(--space-2);
-    padding: var(--space-5) 0;
+    padding: var(--space-6) 0 var(--space-4);
     border-bottom: 1px solid var(--color-line);
-    animation-delay: var(--delay);
+  }
+
+  .changelog-item:first-child .title {
+    color: var(--color-ink);
+  }
+
+  .changelog-item:not(:first-child) .title {
+    color: color-mix(in oklab, var(--color-ink) 72%, var(--color-bg));
   }
 
   .meta {
@@ -57,20 +65,18 @@ const { entries } = Astro.props;
   }
 
   .kind {
-    color: var(--color-accent-deep);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-size: 0.72rem;
+    color: var(--color-accent);
+    font-size: var(--text-sm);
   }
 
   .title {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: var(--cut, var(--text-xl));
     color: var(--color-ink);
     text-decoration: none;
     letter-spacing: -0.02em;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.25;
   }
 
   a.title:hover {
