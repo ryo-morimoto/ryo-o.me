@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-14T21:24:00.000Z",
+  "title": "Design System: ryo",
+  "extensions": {
+    "colorMeta": {
+      "zinc": { "role": "neutral", "displayName": "Zinc plate", "canonical": "#d7dbe0", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "zinc-elevated": { "role": "neutral", "displayName": "Elevated zinc", "canonical": "#e4e7eb", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#d7dbe0", "#e4e7eb", "#f3f4f6"] },
+      "rail": { "role": "neutral", "displayName": "Rail", "canonical": "#cfd3d8", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "proof": { "role": "neutral", "displayName": "Proof", "canonical": "#f3f4f6", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#d7dbe0", "#e4e7eb", "#f3f4f6"] },
+      "sumi": { "role": "neutral", "displayName": "Sumi", "canonical": "#12110f", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "sumi-soft": { "role": "neutral", "displayName": "Soft sumi", "canonical": "#2c2a27", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "sumi-muted": { "role": "neutral", "displayName": "Muted sumi", "canonical": "#5c5854", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "vermilion": { "role": "primary", "displayName": "Vermilion proof", "canonical": "#c42b2b", "tonalRamp": ["#4a0e0e", "#9b1c1c", "#c42b2b", "#d45a5a", "#e39a9a", "#f0c8c8", "#f7e4e4", "#fdf6f6"] },
+      "vermilion-deep": { "role": "primary", "displayName": "Deep vermilion", "canonical": "#9b1c1c", "tonalRamp": ["#4a0e0e", "#9b1c1c", "#c42b2b", "#d45a5a", "#e39a9a", "#f0c8c8", "#f7e4e4", "#fdf6f6"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home name; 72pt cut." },
+      "headline": { "displayName": "Headline", "purpose": "Page titles." },
+      "title": { "displayName": "Title", "purpose": "Specimen staircase." },
+      "body": { "displayName": "Body", "purpose": "65ch reading." },
+      "label": { "displayName": "Point size / meta", "purpose": "Rail ticks, dates, stamps." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "press", "value": "letter-spacing 0.12em to -0.03em, 500ms", "purpose": "Single home name press." },
+      { "name": "duration", "value": "420ms", "purpose": "Zero under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "rail", "value": "720px" },
+      { "name": "whisper", "value": "820px" },
+      { "name": "reading-rail", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Proof stamp",
+      "kind": "button",
+      "refersTo": "stamp",
+      "description": "Rectangular RSS / Recall control.",
+      "html": "<a class=\"ds-stamp\" href=\"#\">RSS フィードを開く</a>",
+      "css": ".ds-stamp { display: inline-flex; padding: 0.7rem 1.1rem; border: 1px solid var(--color-accent); background: var(--color-proof); color: var(--color-accent-deep); text-decoration: none; font-family: var(--font-mono); font-size: 0.875rem; } .ds-stamp:hover { color: var(--color-accent); } .ds-stamp:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
+    },
+    {
+      "name": "Foundry rail",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Point-size ticks plus vertical nav.",
+      "html": "<aside class=\"ds-rail\"><p>ryo</p><ol><li>72</li><li>48</li></ol><nav><a aria-current=\"page\">Home</a><a>Posts</a></nav></aside>",
+      "css": ".ds-rail { width: 4.75rem; background: var(--color-rail); border-right: 1px solid var(--color-line); font-family: var(--font-mono); } .ds-rail ol { color: var(--color-muted); font-size: 0.65rem; } .ds-rail ol li:first-child { color: var(--color-accent); } .ds-rail a { color: var(--color-ink-soft); text-decoration: none; font-size: 0.62rem; } .ds-rail a[aria-current=\"page\"] { color: var(--color-accent); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "活版 活字見本帳",
+    "overview": "The site is a foundry specimen sheet hung in north light: zinc plate, sumi, one vermilion proof mark. Changelog entries are cuts of the same face, largest first. The old mist-teal optical-serif room is an anti-reference.",
+    "keyCharacteristics": [
+      "Zinc ground, sumi ink, vermilion proof only",
+      "Kaisei Decol display / BIZ UDPGothic body / Martian Mono point sizes",
+      "Off-centre 72–6pt rail as navigation",
+      "Square stamps, no pills, no drop shadows",
+      "Focus (R) rakes light; it does not add chrome"
+    ],
+    "rules": [
+      { "name": "The One Impression Rule", "body": "Do not polish entries into plaza metrics.", "section": "colors" },
+      { "name": "The One Vermilion Rule", "body": "Accent is a proof mark, never a fill.", "section": "colors" },
+      { "name": "The Measure Rule", "body": "Reading copy stays near 65ch.", "section": "typography" },
+      { "name": "The Staircase Rule", "body": "Recency is type size, not a badge.", "section": "typography" },
+      { "name": "The Flat Plate Rule", "body": "No glass pills, no drop shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do let recency live in type size.",
+      "Do keep vermilion scarce.",
+      "Do rake light for Focus, hide chrome."
+    ],
+    "donts": [
+      "Don't restore mist, teal, Fraunces, or IBM Plex.",
+      "Don't use pills or equal-size cards as the page structure.",
+      "Don't add like counts or rank chrome.",
+      "Don't put an eyebrow above a heading."
+    ]
+  }
+}

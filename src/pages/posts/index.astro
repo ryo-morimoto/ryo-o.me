@@ -15,11 +15,11 @@ const posts = await getPublishedPosts();
     </header>
     <ul>
       {
-        posts.map((post) => (
+        posts.map((post, i) => (
           <li>
             <a href={`/posts/${post.id}`}>
-              <span class="emoji" aria-hidden="true">
-                {post.data.emoji ?? '·'}
+              <span class="cut" aria-hidden="true">
+                {Math.max(6, 36 - i * 6)}
               </span>
               <span class="body">
                 <span class="title">{post.data.title}</span>
@@ -71,9 +71,12 @@ const posts = await getPublishedPosts();
     color: inherit;
   }
 
-  .emoji {
-    font-size: 1.4rem;
+  .cut {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-accent);
     line-height: 1.2;
+    min-width: 2ch;
   }
 
   .title {

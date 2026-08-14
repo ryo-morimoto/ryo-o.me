@@ -1,21 +1,23 @@
 :root {
-  /* Quiet mist + ink teal — avoid purple / cream-terracotta / broadsheet */
-  --color-bg: #eef2f4;
-  --color-bg-elevated: #f7f9fa;
-  --color-ink: #1c2428;
-  --color-ink-soft: #3d4a52;
-  --color-muted: #6b7a84;
-  --color-line: color-mix(in oklab, var(--color-ink) 12%, transparent);
-  --color-accent: #0f6b63;
-  --color-accent-soft: #d6ebe7;
-  --color-accent-deep: #0a4a45;
-  --color-wash-a: #d9e6ea;
-  --color-wash-b: #e8efe8;
-  --color-focus-ring: #0f6b63;
+  /* Foundry specimen — zinc plate, sumi, vermilion proof. Anti-ref: mist teal / Fraunces / cream-terracotta. */
+  --color-bg: #d7dbe0;
+  --color-bg-elevated: #e4e7eb;
+  --color-ink: #12110f;
+  --color-ink-soft: #2c2a27;
+  --color-muted: #5c5854;
+  --color-line: color-mix(in oklab, var(--color-ink) 22%, transparent);
+  --color-accent: #c42b2b;
+  --color-accent-soft: color-mix(in oklab, var(--color-accent) 16%, var(--color-bg-elevated));
+  --color-accent-deep: #9b1c1c;
+  --color-wash-a: #c5cad1;
+  --color-wash-b: #dfe2e6;
+  --color-focus-ring: #c42b2b;
+  --color-proof: #f3f4f6;
+  --color-rail: #cfd3d8;
 
-  --font-display: 'Fraunces', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-  --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-display: 'Kaisei Decol', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --font-body: 'BIZ UDPGothic', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  --font-mono: 'Martian Mono', ui-monospace, monospace;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -23,9 +25,9 @@
   --text-lg: 1.25rem;
   --text-xl: 1.5rem;
   --text-2xl: clamp(1.75rem, 2.5vw + 1rem, 2.35rem);
-  --text-hero: clamp(2.6rem, 6vw + 1rem, 4.5rem);
+  --text-hero: clamp(3rem, 8vw + 1rem, 5.5rem);
 
-  --leading-tight: 1.15;
+  --leading-tight: 1.12;
   --leading-body: 1.75;
   --measure: 65ch;
 
@@ -39,12 +41,12 @@
   --space-8: 4.5rem;
   --space-9: 7rem;
 
-  --radius-sm: 0.35rem;
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --duration: 320ms;
+  --radius-sm: 0;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 420ms;
 
   --header-h: 3.5rem;
-  --rail-w: 14rem;
+  --rail-w: 4.75rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -72,22 +74,25 @@ body {
   line-height: var(--leading-body);
   color: var(--color-ink);
   background:
-    radial-gradient(120% 80% at 10% -10%, var(--color-wash-a), transparent 55%),
-    radial-gradient(90% 70% at 100% 0%, var(--color-wash-b), transparent 50%),
-    linear-gradient(180deg, var(--color-bg) 0%, #e7ecee 100%);
-  background-attachment: fixed;
+    linear-gradient(90deg, var(--color-rail) 0, var(--color-rail) var(--rail-w), transparent var(--rail-w)),
+    linear-gradient(180deg, var(--color-wash-a) 0%, var(--color-bg) 28%, var(--color-wash-b) 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+body.is-focus-mode {
+  background:
+    linear-gradient(115deg, #f6f7f8 0%, var(--color-bg) 42%, #b7bcc4 100%);
 }
 
 body.is-focus-mode .site-chrome {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-0.4rem);
 }
 
 body.is-focus-mode .reading-rail,
-body.is-focus-mode .post-aside {
+body.is-focus-mode .post-aside,
+body.is-focus-mode .foundry-rail {
   opacity: 0;
   pointer-events: none;
 }
@@ -99,14 +104,15 @@ svg {
 }
 
 a {
-  color: var(--color-accent-deep);
-  text-underline-offset: 0.18em;
+  color: var(--color-ink);
+  text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--color-accent) 55%, transparent);
   transition: color var(--duration) var(--ease-out);
 }
 
 a:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-deep);
 }
 
 a:focus-visible,
@@ -120,7 +126,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 550;
+  font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
   color: var(--color-ink);
@@ -137,17 +143,15 @@ pre {
 
 code {
   font-size: 0.92em;
-  background: var(--color-accent-soft);
+  background: var(--color-proof);
   padding: 0.1em 0.35em;
-  border-radius: var(--radius-sm);
 }
 
 pre {
   overflow-x: auto;
   padding: var(--space-5);
-  border-radius: 0.6rem;
-  background: #1e2a2e;
-  color: #e8f0f2;
+  background: var(--color-ink);
+  color: var(--color-proof);
   margin: 1.5em 0;
 }
 
@@ -158,7 +162,16 @@ pre code {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--color-accent) 28%, white);
+  background: color-mix(in oklab, var(--color-accent) 32%, white);
+}
+
+::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+:focus-visible {
+  caret-color: var(--color-accent);
 }
 
 .sr-only {
@@ -176,25 +189,19 @@ pre code {
 .site-shell {
   width: min(1120px, calc(100% - 2.5rem));
   margin-inline: auto;
+  padding-left: var(--rail-w);
 }
 
-.site-chrome {
-  transition:
-    opacity var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
-}
-
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.6rem);
+@media (max-width: 720px) {
+  :root {
+    --rail-w: 0px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.rise-in {
-  animation: rise-in calc(var(--duration) + 180ms) var(--ease-out) both;
+  body {
+    background: linear-gradient(180deg, var(--color-wash-a) 0%, var(--color-bg) 40%, var(--color-wash-b) 100%);
+  }
+
+  .site-shell {
+    padding-left: 0;
+  }
 }

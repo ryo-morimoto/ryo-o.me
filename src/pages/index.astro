@@ -11,9 +11,8 @@ const entries = await getChangelog();
 
 <BaseLayout title={site.title} description={site.description}>
   <section class="hero site-shell">
-    <p class="eyebrow rise-in">Personal room</p>
-    <h1 class="brand-hero rise-in">{site.name}</h1>
-    <p class="tagline rise-in">{site.tagline}</p>
+    <h1 class="brand-hero">{site.name}</h1>
+    <p class="tagline">{site.tagline}</p>
   </section>
 
   <section class="site-shell timeline-section">
@@ -27,28 +26,20 @@ const entries = await getChangelog();
 
 <style>
   .hero {
-    padding: var(--space-8) 0 var(--space-6);
-    min-height: min(72vh, 40rem);
+    padding: var(--space-8) 0 var(--space-5);
+    min-height: min(58vh, 28rem);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     gap: var(--space-4);
   }
 
-  .eyebrow {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent-deep);
-  }
-
   .brand-hero {
     margin: 0;
     font-size: var(--text-hero);
-    letter-spacing: -0.04em;
-    max-width: 10ch;
+    letter-spacing: -0.03em;
+    max-width: 8ch;
+    animation: press calc(var(--duration) + 80ms) var(--ease-out) both;
   }
 
   .tagline {
@@ -70,17 +61,24 @@ const entries = await getChangelog();
 
   .section-head h2 {
     margin: 0;
-    font-size: var(--text-sm);
-    font-family: var(--font-mono);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    font-weight: 500;
+    font-size: var(--text-2xl);
+    font-weight: 700;
   }
 
   .section-head p {
     margin: 0;
     max-width: 36ch;
     color: var(--color-ink-soft);
+  }
+
+  @keyframes press {
+    from {
+      letter-spacing: 0.12em;
+      opacity: 0.55;
+    }
+    to {
+      letter-spacing: -0.03em;
+      opacity: 1;
+    }
   }
 </style>
