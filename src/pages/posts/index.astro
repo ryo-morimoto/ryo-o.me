@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getPublishedPosts } from '../../lib/content';
+
+export const prerender = true;
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="Posts" description="公開している記事の一覧。">
+  <section class="site-shell list">
+    <header class="head">
+      <h1>Posts</h1>
+      <p>評価順ではありません。新しい順です。</p>
+    </header>
+    <ul>
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.id}`}>
+              <span class="emoji" aria-hidden="true">
+                {post.data.emoji ?? '·'}
+              </span>
+              <span class="body">
+                <span class="title">{post.data.title}</span>
+                <span class="desc">{post.data.description}</span>
+              </span>
+              <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .list {
+    padding: var(--space-8) 0;
+  }
+
+  .head {
+    margin-bottom: var(--space-6);
+  }
+
+  .head h1 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+  }
+
+  .head p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  li a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--color-line);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .emoji {
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  .title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+  }
+
+  .desc {
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--color-ink-soft);
+    max-width: 42ch;
+  }
+
+  time {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    li a {
+      grid-template-columns: auto 1fr;
+    }
+    time {
+      grid-column: 2;
+    }
+  }
+</style>
