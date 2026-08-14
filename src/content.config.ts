@@ -1,32 +1,32 @@
-import { defineCollection } from "astro:content";
-import { z } from "astro/zod";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 
 const posts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
+  loader: glob({ base: "./src/content/posts", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
     date: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    tags: z.array(z.string()).default([]),
+    description: z.string(),
+    draft: z.boolean().default(false),
     emoji: z.string().optional(),
     mood: z.string().optional(),
     related: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
     threadOfSelf: z.string().optional(),
-    draft: z.boolean().default(false),
+    title: z.string(),
+    updated: z.coerce.date().optional(),
   }),
 });
 
 const changelog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/changelog" }),
+  loader: glob({ base: "./src/content/changelog", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
-    title: z.string(),
     date: z.coerce.date(),
-    kind: z.enum(["post", "release", "talk", "life", "note", "oss"]),
     href: z.string().optional(),
+    kind: z.enum(["post", "release", "talk", "life", "note", "oss"]),
     summary: z.string().optional(),
+    title: z.string(),
   }),
 });
 
-export const collections = { posts, changelog };
+export const collections = { changelog, posts };

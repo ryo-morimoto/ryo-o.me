@@ -15,12 +15,12 @@ const KEY = 'oshian:focus-mode';
     #onKey: ((e: KeyboardEvent) => void) | null = null;
 
     connectedCallback() {
-      if (this.dataset.ready) return;
+      if (this.dataset.ready) {return;}
       this.dataset.ready = '1';
       this.#button = this.querySelector('button');
       const label = this.querySelector('.label');
       const key = this.dataset.storageKey ?? 'oshian:focus-mode';
-      if (!this.#button || !(label instanceof HTMLElement)) return;
+      if (!this.#button || !(label instanceof HTMLElement)) {return;}
 
       const apply = (on: boolean) => {
         document.body.classList.toggle('is-focus-mode', on);
@@ -38,8 +38,8 @@ const KEY = 'oshian:focus-mode';
       this.#button.addEventListener('click', toggle);
       this.#onKey = (e: KeyboardEvent) => {
         const t = e.target as HTMLElement | null;
-        if (!t) return;
-        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) return;
+        if (!t) {return;}
+        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) {return;}
         if (e.key === 'r' || e.key === 'R') {
           e.preventDefault();
           toggle();
@@ -49,7 +49,7 @@ const KEY = 'oshian:focus-mode';
     }
 
     disconnectedCallback() {
-      if (this.#onKey) window.removeEventListener('keydown', this.#onKey);
+      if (this.#onKey) {window.removeEventListener('keydown', this.#onKey);}
     }
   }
 

@@ -1,8 +1,8 @@
-export function readingMinutes(body: string): number {
+export const readingMinutes = (body: string): number => {
   const text = body
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/[#>*_\-`[\]()]/g, " ")
-    .replace(/\s+/g, "");
+    .replaceAll(/```[\s\S]*?```/gu, " ")
+    .replaceAll(/[#>*_\-`[\]()]/gu, " ")
+    .replaceAll(/\s+/gu, "");
   const chars = text.length;
   return Math.max(1, Math.ceil(chars / 500));
-}
+};

@@ -23,7 +23,7 @@ const { totalMinutes, contentSelector = '#article-body' } = Astro.props;
     #onScroll: (() => void) | null = null;
 
     connectedCallback() {
-      if (this.dataset.ready) return;
+      if (this.dataset.ready) {return;}
       this.dataset.ready = '1';
       const start = () => this.#bind();
       if (document.readyState === 'loading') {
@@ -38,10 +38,10 @@ const { totalMinutes, contentSelector = '#article-body' } = Astro.props;
       const totalMinutes = Number(this.dataset.totalMinutes ?? '1');
       const selector = this.dataset.contentSelector ?? '#article-body';
       const root = document.querySelector(selector);
-      if (!(root instanceof HTMLElement) || !this.#label) return;
+      if (!(root instanceof HTMLElement) || !this.#label) {return;}
 
       const update = () => {
-        if (!this.#label) return;
+        if (!this.#label) {return;}
         const rect = root.getBoundingClientRect();
         const total = Math.max(root.scrollHeight - window.innerHeight, 1);
         const traveled = Math.min(Math.max(-rect.top, 0), total);
@@ -64,7 +64,7 @@ const { totalMinutes, contentSelector = '#article-body' } = Astro.props;
     }
 
     disconnectedCallback() {
-      if (this.#onScroll) window.removeEventListener('scroll', this.#onScroll);
+      if (this.#onScroll) {window.removeEventListener('scroll', this.#onScroll);}
     }
   }
 

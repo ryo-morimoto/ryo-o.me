@@ -1,8 +1,8 @@
 /// <reference types="astro/client" />
 
-type Env = {
+interface Env {
   ASSETS?: Fetcher;
-};
+}
 
 declare namespace Cloudflare {
   interface Env extends Env {}

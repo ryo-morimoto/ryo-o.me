@@ -19,9 +19,9 @@ const { postId } = Astro.props;
 <script>
   class RecallStripEl extends HTMLElement {
     connectedCallback() {
-      if (this.dataset.ready) return;
+      if (this.dataset.ready) {return;}
       this.dataset.ready = '1';
-      const postId = this.dataset.postId;
+      const {postId} = this.dataset;
       const textarea = this.querySelector('textarea');
       const button = this.querySelector('button');
       const ok = this.querySelector('.ok');

@@ -3,17 +3,25 @@ import type { APIRoute } from "astro";
 export const prerender = true;
 
 /** Basic accessibility smoke checklist as machine-readable JSON for CI consumers. */
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = () => {
   const checks = [
-    { id: "lang", ok: true, detail: "html lang=ja on BaseLayout" },
-    { id: "skip-link", ok: true, detail: "Skip to main content link present" },
-    { id: "focus-ring", ok: true, detail: "Visible :focus-visible styles on interactive elements" },
-    { id: "landmarks", ok: true, detail: "header/nav/main/footer landmarks" },
-    { id: "motion", ok: true, detail: "prefers-reduced-motion short-circuits animation duration" },
+    { detail: "html lang=ja on BaseLayout", id: "lang", ok: true },
+    { detail: "Skip to main content link present", id: "skip-link", ok: true },
     {
+      detail: "Visible :focus-visible styles on interactive elements",
+      id: "focus-ring",
+      ok: true,
+    },
+    { detail: "header/nav/main/footer landmarks", id: "landmarks", ok: true },
+    {
+      detail: "prefers-reduced-motion short-circuits animation duration",
+      id: "motion",
+      ok: true,
+    },
+    {
+      detail: "Ink on mist background; accent used for links/meta",
       id: "contrast-intent",
       ok: true,
-      detail: "Ink on mist background; accent used for links/meta",
     },
   ];
 

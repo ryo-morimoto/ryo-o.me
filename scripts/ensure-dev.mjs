@@ -1,25 +1,23 @@
 import { execFileSync, spawnSync } from "node:child_process";
 
-function statusOutput() {
+const statusOutput = () => {
   try {
-    return execFileSync("pnpm", ["dev:status"], { encoding: "utf8" });
+    return execFileSync("pnpm", ["dev:status"], { encoding: "utf-8" });
   } catch (error) {
     return `${error.stdout ?? ""}${error.stderr ?? ""}${error.message ?? ""}`;
   }
-}
+};
 
-function statusSaysRunning(output) {
-  return /Dev server running/.test(output);
-}
+const statusSaysRunning = (output) => /Dev server running/u.test(output);
 
-async function portResponds() {
+const portResponds = async () => {
   try {
     await fetch("http://127.0.0.1:4321/", { signal: AbortSignal.timeout(800) });
     return true;
   } catch {
     return false;
   }
-}
+};
 
 const output = statusOutput();
 process.stdout.write(output);

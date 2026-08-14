@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+
 import { getPublishedPosts } from "../lib/content";
 import { site } from "../lib/site";
 
@@ -14,7 +15,7 @@ export const GET: APIRoute = async () => {
     <guid isPermaLink="true">${site.url}/posts/${post.id}</guid>
     <description><![CDATA[${post.data.description}]]></description>
     <pubDate>${post.data.date.toUTCString()}</pubDate>
-  </item>`,
+  </item>`
     )
     .join("\n");
 
@@ -31,8 +32,8 @@ ${items}
 
   return new Response(xml, {
     headers: {
-      "Content-Type": "application/rss+xml; charset=utf-8",
       "Cache-Control": "public, max-age=600",
+      "Content-Type": "application/rss+xml; charset=utf-8",
     },
   });
 };

@@ -1,21 +1,24 @@
 import type { APIRoute } from "astro";
+
 import { getPublishedPosts } from "../../lib/content";
 import { site } from "../../lib/site";
 
 export const prerender = true;
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const posts = await getPublishedPosts();
-  return [{ params: { slug: "default" } }, ...posts.map((post) => ({ params: { slug: post.id } }))];
-}
+  return [
+    { params: { slug: "default" } },
+    ...posts.map((post) => ({ params: { slug: post.id } })),
+  ];
+};
 
-function escapeXml(value: string) {
-  return value
+const escapeXml = (value: string) =>
+  value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
-}
 
 export const GET: APIRoute = async ({ params }) => {
   const slug = params.slug ?? "default";
@@ -45,8 +48,8 @@ export const GET: APIRoute = async ({ params }) => {
 
   return new Response(svg, {
     headers: {
-      "Content-Type": "image/svg+xml; charset=utf-8",
       "Cache-Control": "public, max-age=86400",
+      "Content-Type": "image/svg+xml; charset=utf-8",
     },
   });
 };
