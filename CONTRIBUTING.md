@@ -33,14 +33,19 @@ pnpm dev:stop
 
 ## Checks
 
+Layers (cheapest correctness first):
+
 ```sh
-pnpm test
-pnpm typecheck
-pnpm build
+pnpm verify   # test + typecheck — local / agent inner loop
+pnpm build    # HTML, content collections, a11y JSON — merge gate
 ```
 
-CI (`.github/workflows/ci.yml`, job `ci`) runs the same three commands after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
+`pnpm verify` is `pnpm test && pnpm typecheck`. Use it after a code change before paying for a full build. `pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
 
-`pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
+CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails. There is no linter in this repo; do not add one as a PR-blocking step.
 
-`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`.
+`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`, including `tests/`.
+
+Unit tests cover pure helpers under `src/lib/` (file-level). Content collection schemas, MDX, islands, and generated routes are gated by `pnpm build`, not by the unit suite. If you change `src/content.config.ts`, `src/content/**`, or page/island templates, run `pnpm build` even when `pnpm verify` is green.
+
+CI does not retry failed steps.

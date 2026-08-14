@@ -27,6 +27,10 @@ That is the same command `.cursor/environment.json` `terminals` uses before `pnp
 
 Manage a running server with `pnpm dev:stop`. App: http://localhost:4321/
 
+## Checks
+
+After a code change, run `pnpm verify` (`test` then `typecheck`) before `pnpm build`. Skip the build only when the change cannot affect pages, content collections, islands, or generated JSON. CI still runs all three. Do not add `astro check` (incompatible with TypeScript 7).
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

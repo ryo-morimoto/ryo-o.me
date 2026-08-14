@@ -1,12 +1,26 @@
 name: CI
 
+# PRs already run as pull_request. Branch pushes without a PR are not a
+# merge gate. Running both push and pull_request on the same SHA doubled
+# runner minutes (observed: ~26s + ~27s on the same commit) without extra
+# correctness.
 on:
-  push:
   pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -15,6 +29,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Cheap correctness first so a schema/unit failure does not pay for a build.
       - run: pnpm test
       - run: pnpm typecheck
       - run: pnpm build
