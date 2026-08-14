@@ -1,0 +1,175 @@
+---
+import '../styles/tokens.css';
+import { site, nav } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  ogImage = '/og-default.svg',
+  canonical,
+} = Astro.props;
+
+const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site.url).href;
+const ogUrl = new URL(ogImage, site.url).href;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <header class="site-header site-chrome">
+      <div class="site-shell header-inner">
+        <a class="brand" href="/">{site.name}</a>
+        <nav class="nav" aria-label="主要">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer site-chrome">
+      <div class="site-shell footer-inner">
+        <p class="footer-brand">{site.name}</p>
+        <p class="footer-note">広場ではなく、部屋。評価の数字は置きません。</p>
+        <p class="footer-meta">
+          <a href="/rss.xml">RSS</a>
+          <span aria-hidden="true">·</span>
+          <a href="/about">About</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: var(--space-4);
+    top: -3rem;
+    background: var(--color-ink);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    z-index: 100;
+    border-radius: var(--radius-sm);
+  }
+
+  .skip-link:focus {
+    top: var(--space-4);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklab, var(--color-bg) 78%, transparent);
+    border-bottom: 1px solid transparent;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-h);
+    gap: var(--space-4);
+  }
+
+  .brand {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-ink);
+    text-decoration: none;
+    letter-spacing: -0.03em;
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    color: var(--color-ink-soft);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+  }
+
+  .nav a[aria-current='page'],
+  .nav a:hover {
+    color: var(--color-accent-deep);
+  }
+
+  .site-footer {
+    margin-top: var(--space-9);
+    padding: var(--space-7) 0 var(--space-8);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .footer-inner {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    margin: 0;
+  }
+
+  .footer-note,
+  .footer-meta {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .footer-meta {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+</style>
