@@ -35,6 +35,15 @@ Project-local Cursor skill: `.cursor/skills/impeccable` (do not install GitHub C
 npx impeccable update --providers=cursor --scope=project -y
 ```
 
+## Engineering skills (dmmulroy)
+
+Project-local Cursor skills under `.cursor/skills/` (vendored from [dmmulroy/skills](https://github.com/dmmulroy/skills); source pin in `.cursor/skills/dmmulroy-skills.SOURCE.md`). Reload the harness after clone.
+
+- **coding-standards** (`.cursor/skills/coding-standards`): model-invoked. Read and follow before TypeScript engineering, refactors, or when another skill needs this project's coding standards.
+- **tech-spec** (`.cursor/skills/tech-spec`): user-invoked (`/tech-spec`). Design-only typed call-stack architecture handoff. Do not implement unless the user asks.
+
+When writing a tech spec, load `.cursor/skills/tech-spec/SKILL.md` and apply `.cursor/skills/coding-standards/SKILL.md` for contracts, seams, errors, and the RGR TDD plan.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
