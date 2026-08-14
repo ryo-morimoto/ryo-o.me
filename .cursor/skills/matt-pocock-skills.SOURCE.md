@@ -6,17 +6,16 @@ License: MIT (see `matt-pocock-skills.LICENSE`)
 
 Vendored from [mattpocock/skills](https://github.com/mattpocock/skills) so the
 collection is self-contained, matching the set [dmmulroy/skills](https://github.com/dmmulroy/skills)
-documents. Do not edit these skills by hand; re-sync instead.
+documents. Do not edit these skills by hand; refresh from upstream instead.
 
-- `grilling/` — model-invoked relentless interview loop.
-- `grill-me/` — user-invoked grilling session.
-- `domain-modeling/` — model-invoked glossary and architectural-decision workflow.
-- `grill-with-docs/` — user-invoked grilling session that also builds docs such as ADRs and a glossary.
-- `tdd/` — model-invoked red-green-refactor test-driven development.
+Vendored skills:
 
-Resync with:
+- `grilling/` — https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling
+- `grill-me/` — https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me
+- `domain-modeling/` — https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling
+- `grill-with-docs/` — https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs
+- `tdd/` — https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd
 
-```
-scripts/sync-matt-skills.sh                 # from upstream main
-MATT_SKILLS_REF=<sha|tag|branch> scripts/sync-matt-skills.sh
-```
+Refresh (copy each skill directory from upstream `skills/…`; keep the local
+override at the end of `tdd/SKILL.md` that makes `coding-standards` supersede
+`mocking.md`).
