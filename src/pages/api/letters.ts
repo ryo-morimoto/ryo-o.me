@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import * as v from 'valibot';
 import { letterBodySchema } from '../../lib/letter';
 
 export const prerender = false;
@@ -68,11 +67,11 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ error: '不正なリクエストです' }, { status: 400 });
   }
 
-  const parsed = v.safeParse(letterBodySchema, raw);
+  const parsed = letterBodySchema.safeParse(raw);
   if (!parsed.success) {
     return Response.json({ error: 'スタンプを選んでください' }, { status: 400 });
   }
-  const { postId, stamp } = parsed.output;
+  const { postId, stamp } = parsed.data;
 
   const env = await getEnv();
   const ip = clientIp(request);
