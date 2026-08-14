@@ -22,6 +22,15 @@ const { postId } = Astro.props;
     connectedCallback() {
       if (this.dataset.ready) return;
       this.dataset.ready = '1';
+      const start = () => this.#bind();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
+    }
+
+    #bind() {
       const postId = this.dataset.postId;
       const panel = this.querySelector('.whisper-panel');
       const textarea = this.querySelector('textarea');

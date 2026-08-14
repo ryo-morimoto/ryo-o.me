@@ -38,6 +38,15 @@ const { contentSelector = '#article-body' } = Astro.props;
     connectedCallback() {
       if (this.dataset.ready) return;
       this.dataset.ready = '1';
+      const start = () => this.#bind();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
+    }
+
+    #bind() {
       const selector = this.dataset.contentSelector ?? '#article-body';
       const root = document.querySelector(selector);
       const progressOnly = this.querySelector('.progress-only');

@@ -25,6 +25,15 @@ const { totalMinutes, contentSelector = '#article-body' } = Astro.props;
     connectedCallback() {
       if (this.dataset.ready) return;
       this.dataset.ready = '1';
+      const start = () => this.#bind();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+      } else {
+        start();
+      }
+    }
+
+    #bind() {
       this.#label = this.querySelector('.remaining-time');
       const totalMinutes = Number(this.dataset.totalMinutes ?? '1');
       const selector = this.dataset.contentSelector ?? '#article-body';
