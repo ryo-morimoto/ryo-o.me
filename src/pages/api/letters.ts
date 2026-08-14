@@ -1,18 +1,12 @@
 import type { APIRoute } from 'astro';
-import { letterStamps } from '../../lib/site';
+import { getPublishedPosts } from '../../lib/content';
+import { letterBodySchema, letterClientError } from '../../lib/letter';
 
 export const prerender = false;
-
-const STAMP_IDS = new Set(letterStamps.map((s) => s.id));
 
 type Env = {
   DB?: D1Database;
   KV?: KVNamespace;
-};
-
-type LetterBody = {
-  postId?: string;
-  stamp?: string;
 };
 
 const memoryLetters: Array<{ postId: string; stamp: string; createdAt: string; ip: string }> = [];
@@ -37,6 +31,7 @@ function clientIp(request: Request): string {
 async function rateLimited(env: Env, ip: string): Promise<boolean> {
   const key = `letter-rate:${ip}`;
   if (env.KV) {
+    // KV has no atomic increment; concurrent requests can exceed 8.
     const current = Number((await env.KV.get(key)) ?? '0');
     if (current >= 8) return true;
     await env.KV.put(key, String(current + 1), { expirationTtl: 60 * 60 });
@@ -56,18 +51,33 @@ async function hashIp(ip: string): Promise<string> {
     .slice(0, 16);
 }
 
+export const GET: APIRoute = async () => {
+  return new Response(JSON.stringify({ error: 'POST のみ受け付けます' }), {
+    status: 405,
+    headers: {
+      Allow: 'POST',
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+  });
+};
+
 export const POST: APIRoute = async ({ request }) => {
-  let body: LetterBody;
+  let raw: unknown;
   try {
-    body = await request.json();
+    raw = await request.json();
   } catch {
     return Response.json({ error: '不正なリクエストです' }, { status: 400 });
   }
 
-  const postId = body.postId?.trim();
-  const stamp = body.stamp?.trim();
-  if (!postId || !stamp || !STAMP_IDS.has(stamp)) {
-    return Response.json({ error: 'スタンプを選んでください' }, { status: 400 });
+  const parsed = letterBodySchema.safeParse(raw);
+  if (!parsed.success) {
+    return Response.json({ error: letterClientError(parsed.error) }, { status: 400 });
+  }
+  const { postId, stamp } = parsed.data;
+
+  const posts = await getPublishedPosts();
+  if (!posts.some((post) => post.id === postId)) {
+    return Response.json({ error: '記事を指定してください' }, { status: 400 });
   }
 
   const env = await getEnv();

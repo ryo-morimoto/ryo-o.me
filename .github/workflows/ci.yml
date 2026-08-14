@@ -5,18 +5,18 @@ on:
   pull_request:
 
 jobs:
-  check:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: '.nvmrc'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm typecheck
       - run: pnpm build
       - name: Accessibility checklist artifact exists
-        run: test -f dist/client/api/a11y-checklist.json || test -f dist/api/a11y-checklist.json || ls -R dist | head -80
+        run: test -f dist/client/api/a11y-checklist.json || test -f dist/api/a11y-checklist.json

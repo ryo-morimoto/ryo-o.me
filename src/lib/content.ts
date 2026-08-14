@@ -2,6 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Post = CollectionEntry<'posts'>;
 export type ChangelogEntry = CollectionEntry<'changelog'>;
+export type ChangelogKind = ChangelogEntry['data']['kind'];
 
 export async function getPublishedPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
@@ -89,7 +90,7 @@ function hashString(input: string): number {
   return Math.abs(h);
 }
 
-export const kindLabel: Record<string, string> = {
+export const kindLabel: Record<ChangelogKind, string> = {
   post: 'Post',
   release: 'Release',
   talk: 'Talk',
