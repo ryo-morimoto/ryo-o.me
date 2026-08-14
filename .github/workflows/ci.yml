@@ -32,6 +32,7 @@ jobs:
       # Cheap correctness first so a schema/unit failure does not pay for a build.
       - run: pnpm test
       - run: pnpm typecheck
+      - run: pnpm check:astro
       - run: pnpm lint
       - run: pnpm fmt:check
       - run: pnpm build

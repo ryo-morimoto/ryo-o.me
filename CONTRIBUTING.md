@@ -36,19 +36,19 @@ pnpm dev:stop
 Layers (cheapest correctness first):
 
 ```sh
-pnpm verify   # test + typecheck (TS7 --checkers 4) + oxlint --type-aware + oxfmt --check
+pnpm verify   # test + TS7 tsc --checkers 4 + astro check --noSync + oxlint --type-aware + oxfmt --check
 pnpm build    # HTML, content collections, a11y JSON — merge gate
 ```
 
-`pnpm verify` is `pnpm test && pnpm typecheck && pnpm lint && pnpm fmt:check`. Use it after a code change before paying for a full build.
+`pnpm verify` is `pnpm test && pnpm typecheck && pnpm check:astro && pnpm lint && pnpm fmt:check`. Use it after a code change before paying for a full build.
 
-`pnpm check` / `astro check` is not used as the type gate. The `typescript` package is aliased to `@typescript/typescript6` (JS API + `tsc6`) so tools that still import TypeScript 6 can resolve. Authoritative typecheck is TypeScript 7 via `@typescript/native` (`tsc`).
+Do not replace `pnpm typecheck` with `astro check`, and do not set `build` to `astro check && astro build`. Authoritative `.ts` typecheck is TypeScript 7 via `@typescript/native` (`tsc --noEmit --checkers 4`). The `typescript` package stays aliased to `@typescript/typescript6` (JS API + `tsc6`) so `@astrojs/check` can load the Language Service. `pnpm check:astro` is `astro check --noSync` and covers `.astro` files that `tsc` ignores. Run it only after `pnpm typecheck` (or `astro sync`). `pnpm typecheck:tsc6` is comparison-only and is not the merge gate.
 
-`pnpm typecheck` runs `astro sync` then `tsc --noEmit --checkers 4`. The checker count is pinned in the script so local and CI partition files the same way. Do not override `--checkers` on the CLI. `pnpm typecheck:tsc6` runs the TypeScript 6 API compiler for comparison; it is not the merge gate.
+`pnpm typecheck` runs `astro sync` then `tsc --noEmit --checkers 4`. The checker count is pinned in the script so local and CI partition files the same way. Do not override `--checkers` on the CLI.
 
 `pnpm lint` is `oxlint --type-aware --deny-warnings` (tsgolint). Type-aware linting is a correctness check. `pnpm fmt` / `pnpm fmt:check` is Oxfmt; format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` are not formatted.
 
-CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, `pnpm lint`, `pnpm fmt:check`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
+CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, `pnpm check:astro`, `pnpm lint`, `pnpm fmt:check`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
 
 Unit tests cover pure helpers under `src/lib/` (file-level). Content collection schemas, MDX, islands, and generated routes are gated by `pnpm build`, not by the unit suite. If you change `src/content.config.ts`, `src/content/**`, or page/island templates, run `pnpm build` even when `pnpm verify` is green.
 

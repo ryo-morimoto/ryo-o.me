@@ -19,8 +19,9 @@
     "lint:fix": "oxlint --type-aware --fix --deny-warnings",
     "typecheck": "astro sync && tsc --noEmit --checkers 4",
     "typecheck:tsc6": "astro sync && tsc6 --noEmit",
+    "check:astro": "astro check --noSync",
     "test": "node --experimental-strip-types --test \"tests/**/*.test.ts\"",
-    "verify": "pnpm test && pnpm typecheck && pnpm lint && pnpm fmt:check"
+    "verify": "pnpm test && pnpm typecheck && pnpm check:astro && pnpm lint && pnpm fmt:check"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.1",
@@ -30,6 +31,7 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@types/node": "^26.2.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "oxfmt": "^0.63.0",
