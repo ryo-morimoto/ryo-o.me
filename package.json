@@ -31,7 +31,8 @@
     "astro": "^7.2.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

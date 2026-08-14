@@ -1,16 +1,23 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import * as v from 'valibot';
+import { changelogSchema, postsSchema, type ChangelogData, type ChangelogKind, type PostData } from './schemas';
 
-export type Post = CollectionEntry<'posts'>;
-export type ChangelogEntry = CollectionEntry<'changelog'>;
+export type Post = Omit<CollectionEntry<'posts'>, 'data'> & { data: PostData };
+export type ChangelogEntry = Omit<CollectionEntry<'changelog'>, 'data'> & { data: ChangelogData };
 
 export async function getPublishedPosts(): Promise<Post[]> {
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
-  return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const posts = await getCollection('posts');
+  return posts
+    .map((entry) => ({ ...entry, data: v.parse(postsSchema, entry.data) }))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export async function getChangelog(): Promise<ChangelogEntry[]> {
   const entries = await getCollection('changelog');
-  return entries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return entries
+    .map((entry) => ({ ...entry, data: v.parse(changelogSchema, entry.data) }))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export function formatDate(date: Date, locale = 'ja-JP'): string {
@@ -89,7 +96,7 @@ function hashString(input: string): number {
   return Math.abs(h);
 }
 
-export const kindLabel: Record<string, string> = {
+export const kindLabel: Record<ChangelogKind, string> = {
   post: 'Post',
   release: 'Release',
   talk: 'Talk',

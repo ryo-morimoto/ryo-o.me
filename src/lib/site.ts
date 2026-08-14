@@ -16,9 +16,15 @@ export const nav = [
   { href: '/subscribe', label: 'Subscribe' },
 ] as const;
 
+export const letterStampIds = ['read', 'resonate', 'thanks', 'think'] as const;
+
 export const letterStamps = [
   { id: 'read', label: '読んだよ', emoji: '📖' },
   { id: 'resonate', label: '響いた', emoji: '🌊' },
   { id: 'thanks', label: 'ありがとう', emoji: '🌿' },
   { id: 'think', label: '考えさせられた', emoji: '💭' },
-] as const;
+] as const satisfies ReadonlyArray<{
+  id: (typeof letterStampIds)[number];
+  label: string;
+  emoji: string;
+}>;

@@ -1,18 +1,12 @@
 import type { APIRoute } from 'astro';
-import { letterStamps } from '../../lib/site';
+import * as v from 'valibot';
+import { letterBodySchema } from '../../lib/letter';
 
 export const prerender = false;
-
-const STAMP_IDS = new Set(letterStamps.map((s) => s.id));
 
 type Env = {
   DB?: D1Database;
   KV?: KVNamespace;
-};
-
-type LetterBody = {
-  postId?: string;
-  stamp?: string;
 };
 
 const memoryLetters: Array<{ postId: string; stamp: string; createdAt: string; ip: string }> = [];
@@ -67,18 +61,18 @@ export const GET: APIRoute = async () => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
-  let body: LetterBody;
+  let raw: unknown;
   try {
-    body = await request.json();
+    raw = await request.json();
   } catch {
     return Response.json({ error: '不正なリクエストです' }, { status: 400 });
   }
 
-  const postId = body.postId?.trim();
-  const stamp = body.stamp?.trim();
-  if (!postId || !stamp || !STAMP_IDS.has(stamp)) {
+  const parsed = v.safeParse(letterBodySchema, raw);
+  if (!parsed.success) {
     return Response.json({ error: 'スタンプを選んでください' }, { status: 400 });
   }
+  const { postId, stamp } = parsed.output;
 
   const env = await getEnv();
   const ip = clientIp(request);
