@@ -44,6 +44,18 @@ Project-local Cursor skills under `.cursor/skills/` (vendored from [dmmulroy/ski
 
 When writing a tech spec, load `.cursor/skills/tech-spec/SKILL.md` and apply `.cursor/skills/coding-standards/SKILL.md` for contracts, seams, errors, and the RGR TDD plan.
 
+## Engineering skills (Matt Pocock, via dmmulroy)
+
+Vendored from [mattpocock/skills](https://github.com/mattpocock/skills) (the set [dmmulroy/skills](https://github.com/dmmulroy/skills) vendors). Pin and resync: `.cursor/skills/matt-pocock-skills.SOURCE.md`, `scripts/sync-matt-skills.sh`. Do not edit the skill files by hand.
+
+- **grilling** (`.cursor/skills/grilling`): model-invoked. Relentless interview loop. Use when stress-testing a plan, decision, or idea.
+- **grill-me** (`.cursor/skills/grill-me`): user-invoked (`/grill-me`). Stateless grilling session (runs `/grilling`).
+- **domain-modeling** (`.cursor/skills/domain-modeling`): model-invoked. Glossary and ADR workflow (`CONTEXT.md`, `docs/adr/`).
+- **grill-with-docs** (`.cursor/skills/grill-with-docs`): user-invoked (`/grill-with-docs`). Grilling that also builds ADRs and a glossary (runs `/grilling` and `/domain-modeling`).
+- **tdd** (`.cursor/skills/tdd`): model-invoked. Red-green-refactor. Local override: `coding-standards` supersedes `mocking.md` (no `vi.mock` / `vi.spyOn`).
+
+Reload the harness after clone.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
