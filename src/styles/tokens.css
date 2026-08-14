@@ -13,6 +13,7 @@
   --color-wash-b: #dfe2e6;
   --color-focus-ring: #c42b2b;
   --color-proof: #f3f4f6;
+  --color-rail: #cfd3d8;
 
   --font-display: 'Kaisei Decol', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
   --font-body: 'BIZ UDPGothic', 'Hiragino Sans', 'Yu Gothic', sans-serif;
@@ -73,7 +74,7 @@ body {
   line-height: var(--leading-body);
   color: var(--color-ink);
   background:
-    linear-gradient(90deg, #cfd3d8 0, #cfd3d8 var(--rail-w), transparent var(--rail-w)),
+    linear-gradient(90deg, var(--color-rail) 0, var(--color-rail) var(--rail-w), transparent var(--rail-w)),
     linear-gradient(180deg, var(--color-wash-a) 0%, var(--color-bg) 28%, var(--color-wash-b) 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

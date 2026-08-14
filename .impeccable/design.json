@@ -1,122 +1,82 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-14T20:55:00.000Z",
+  "generatedAt": "2026-08-14T21:24:00.000Z",
   "title": "Design System: ryo",
   "extensions": {
     "colorMeta": {
-      "mist": { "role": "neutral", "displayName": "Mist", "canonical": "#eef2f4", "tonalRamp": ["#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#e7ecee", "#eef2f4", "#f7f9fa"] },
-      "mist-elevated": { "role": "neutral", "displayName": "Elevated Mist", "canonical": "#f7f9fa", "tonalRamp": ["#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#e7ecee", "#eef2f4", "#f7f9fa"] },
-      "mist-floor": { "role": "neutral", "displayName": "Mist Floor", "canonical": "#e7ecee", "tonalRamp": ["#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#e7ecee", "#eef2f4", "#f7f9fa"] },
-      "wash-cool": { "role": "neutral", "displayName": "Cool Wash", "canonical": "#d9e6ea", "tonalRamp": ["#0a4a45", "#3d5a62", "#6b7a84", "#8fa4ab", "#b7c9ce", "#d9e6ea", "#eef2f4", "#f7f9fa"] },
-      "wash-leaf": { "role": "neutral", "displayName": "Leaf Wash", "canonical": "#e8efe8", "tonalRamp": ["#0a4a45", "#3d5a4a", "#6b7a84", "#8fa49a", "#c5d6c8", "#e8efe8", "#eef2f4", "#f7f9fa"] },
-      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1c2428", "tonalRamp": ["#12181b", "#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#eef2f4", "#f7f9fa"] },
-      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#3d4a52", "tonalRamp": ["#12181b", "#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#eef2f4", "#f7f9fa"] },
-      "muted": { "role": "neutral", "displayName": "Muted", "canonical": "#6b7a84", "tonalRamp": ["#12181b", "#1c2428", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#eef2f4", "#f7f9fa"] },
-      "teal": { "role": "primary", "displayName": "Teal", "canonical": "#0f6b63", "tonalRamp": ["#062e2b", "#0a4a45", "#0f6b63", "#2a8a80", "#5aada4", "#9fd4ce", "#d6ebe7", "#f3faf8"] },
-      "teal-deep": { "role": "primary", "displayName": "Deep Teal", "canonical": "#0a4a45", "tonalRamp": ["#062e2b", "#0a4a45", "#0f6b63", "#2a8a80", "#5aada4", "#9fd4ce", "#d6ebe7", "#f3faf8"] },
-      "teal-soft": { "role": "primary", "displayName": "Soft Teal", "canonical": "#d6ebe7", "tonalRamp": ["#062e2b", "#0a4a45", "#0f6b63", "#2a8a80", "#5aada4", "#9fd4ce", "#d6ebe7", "#f3faf8"] },
-      "code-bg": { "role": "neutral", "displayName": "Code Night", "canonical": "#1e2a2e", "tonalRamp": ["#12181b", "#1e2a2e", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#e8f0f2", "#f7f9fa"] },
-      "code-ink": { "role": "neutral", "displayName": "Code Ink", "canonical": "#e8f0f2", "tonalRamp": ["#12181b", "#1e2a2e", "#3d4a52", "#6b7a84", "#9aa7ae", "#c5ced2", "#e8f0f2", "#f7f9fa"] }
+      "zinc": { "role": "neutral", "displayName": "Zinc plate", "canonical": "#d7dbe0", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "zinc-elevated": { "role": "neutral", "displayName": "Elevated zinc", "canonical": "#e4e7eb", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#d7dbe0", "#e4e7eb", "#f3f4f6"] },
+      "rail": { "role": "neutral", "displayName": "Rail", "canonical": "#cfd3d8", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "proof": { "role": "neutral", "displayName": "Proof", "canonical": "#f3f4f6", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#d7dbe0", "#e4e7eb", "#f3f4f6"] },
+      "sumi": { "role": "neutral", "displayName": "Sumi", "canonical": "#12110f", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "sumi-soft": { "role": "neutral", "displayName": "Soft sumi", "canonical": "#2c2a27", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "sumi-muted": { "role": "neutral", "displayName": "Muted sumi", "canonical": "#5c5854", "tonalRamp": ["#12110f", "#2c2a27", "#5c5854", "#8a8680", "#c5cad1", "#cfd3d8", "#d7dbe0", "#f3f4f6"] },
+      "vermilion": { "role": "primary", "displayName": "Vermilion proof", "canonical": "#c42b2b", "tonalRamp": ["#4a0e0e", "#9b1c1c", "#c42b2b", "#d45a5a", "#e39a9a", "#f0c8c8", "#f7e4e4", "#fdf6f6"] },
+      "vermilion-deep": { "role": "primary", "displayName": "Deep vermilion", "canonical": "#9b1c1c", "tonalRamp": ["#4a0e0e", "#9b1c1c", "#c42b2b", "#d45a5a", "#e39a9a", "#f0c8c8", "#f7e4e4", "#fdf6f6"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Home brand name only." },
+      "display": { "displayName": "Display", "purpose": "Home name; 72pt cut." },
       "headline": { "displayName": "Headline", "purpose": "Page titles." },
-      "title": { "displayName": "Title", "purpose": "Changelog and post-list titles." },
-      "body": { "displayName": "Body", "purpose": "Article and supporting copy at ~65ch." },
-      "label": { "displayName": "Label / Mono", "purpose": "Dates, kbd, remaining time, footer meta." }
+      "title": { "displayName": "Title", "purpose": "Specimen staircase." },
+      "body": { "displayName": "Body", "purpose": "65ch reading." },
+      "label": { "displayName": "Point size / meta", "purpose": "Rail ticks, dates, stamps." }
     },
     "shadows": [],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for color, opacity, and chrome." },
-      { "name": "duration", "value": "320ms", "purpose": "Standard duration; 0ms under prefers-reduced-motion." },
-      { "name": "rise-in", "value": "translateY(0.6rem) fade, duration + 180ms", "purpose": "Home hero entrance only." }
+      { "name": "press", "value": "letter-spacing 0.12em to -0.03em, 500ms", "purpose": "Single home name press." },
+      { "name": "duration", "value": "420ms", "purpose": "Zero under reduced motion." }
     ],
     "breakpoints": [
-      { "name": "post-list", "value": "640px" },
-      { "name": "post-nav", "value": "720px" },
+      { "name": "rail", "value": "720px" },
       { "name": "whisper", "value": "820px" },
       { "name": "reading-rail", "value": "1100px" }
     ]
   },
   "components": [
     {
-      "name": "RSS pill",
+      "name": "Proof stamp",
       "kind": "button",
-      "refersTo": "button-pill",
-      "description": "Primary quiet action (Subscribe RSS).",
-      "html": "<a class=\"ds-btn-pill\" href=\"#\">RSS フィードを開く</a>",
-      "css": ".ds-btn-pill { display: inline-flex; padding: 0.65rem 1.1rem; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--color-accent) 35%, transparent); background: var(--color-accent-soft); color: var(--color-accent-deep); text-decoration: none; font-family: var(--font-body); } .ds-btn-pill:hover { color: var(--color-accent); } .ds-btn-pill:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
+      "refersTo": "stamp",
+      "description": "Rectangular RSS / Recall control.",
+      "html": "<a class=\"ds-stamp\" href=\"#\">RSS フィードを開く</a>",
+      "css": ".ds-stamp { display: inline-flex; padding: 0.7rem 1.1rem; border: 1px solid var(--color-accent); background: var(--color-proof); color: var(--color-accent-deep); text-decoration: none; font-family: var(--font-mono); font-size: 0.875rem; } .ds-stamp:hover { color: var(--color-accent); } .ds-stamp:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
     },
     {
-      "name": "Ghost pill",
-      "kind": "button",
-      "refersTo": "button-ghost",
-      "description": "Secondary action (Recall save).",
-      "html": "<button class=\"ds-btn-ghost\" type=\"button\">この端末に残す</button>",
-      "css": ".ds-btn-ghost { border: 1px solid var(--color-line); background: transparent; border-radius: 999px; padding: 0.4rem 0.85rem; font-family: var(--font-body); color: var(--color-ink-soft); cursor: pointer; } .ds-btn-ghost:hover { color: var(--color-accent-deep); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
-    },
-    {
-      "name": "Field",
-      "kind": "input",
-      "refersTo": "input-field",
-      "description": "Recall / Whisper textarea.",
-      "html": "<textarea class=\"ds-input\" rows=\"3\" placeholder=\"この記事を、自分の言葉で短くすると…\"></textarea>",
-      "css": ".ds-input { width: 100%; border: 1px solid var(--color-line); border-radius: 0.5rem; padding: 0.8rem; font-family: var(--font-body); font-size: 1.0625rem; background: var(--color-bg-elevated); color: var(--color-ink); resize: vertical; } .ds-input:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
-    },
-    {
-      "name": "Header nav",
+      "name": "Foundry rail",
       "kind": "nav",
       "refersTo": "nav-item",
-      "description": "Sticky glass header: Fraunces brand + text links.",
-      "html": "<header class=\"ds-nav\"><a class=\"ds-brand\" href=\"/\">ryo</a><nav><a href=\"/\">Home</a><a href=\"/posts\" aria-current=\"page\">Posts</a><a href=\"/about\">About</a></nav></header>",
-      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; min-height: 3.5rem; padding: 0 1.25rem; background: color-mix(in oklab, var(--color-bg) 78%, transparent); backdrop-filter: blur(10px); } .ds-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--color-ink); text-decoration: none; letter-spacing: -0.03em; } .ds-nav nav { display: flex; gap: 1rem; } .ds-nav nav a { color: var(--color-ink-soft); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.02em; } .ds-nav nav a[aria-current=\"page\"], .ds-nav nav a:hover { color: var(--color-accent-deep); }"
-    },
-    {
-      "name": "Post row",
-      "kind": "card",
-      "refersTo": "nav-item",
-      "description": "Hairline list row, not a lifted card.",
-      "html": "<a class=\"ds-row\" href=\"#\"><span class=\"ds-emoji\">🌿</span><span><strong>おしゃん個人ブログを作るときに考えたこと</strong><em>評価順ではありません。</em></span><time>2026-08-10</time></a>",
-      "css": ".ds-row { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: start; padding: 1.5rem 0; border-bottom: 1px solid var(--color-line); text-decoration: none; color: inherit; font-family: var(--font-body); } .ds-emoji { font-size: 1.4rem; } .ds-row strong { display: block; font-family: var(--font-display); font-size: 1.5rem; font-weight: 550; letter-spacing: -0.02em; } .ds-row em { display: block; margin-top: 0.25rem; font-style: normal; color: var(--color-ink-soft); max-width: 42ch; } .ds-row time { font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-muted); } .ds-row:hover strong { color: var(--color-accent); }"
-    },
-    {
-      "name": "Focus chip",
-      "kind": "custom",
-      "refersTo": "button-ghost",
-      "description": "Fixed reading chrome; R toggles the room.",
-      "html": "<button class=\"ds-focus\" type=\"button\" aria-pressed=\"false\">Focus <kbd>R</kbd></button>",
-      "css": ".ds-focus { border: 1px solid var(--color-line); background: color-mix(in oklab, var(--color-bg-elevated) 92%, transparent); backdrop-filter: blur(8px); border-radius: 999px; padding: 0.55rem 0.85rem; display: inline-flex; gap: 0.45rem; align-items: center; font-size: 0.8rem; color: var(--color-ink-soft); font-family: var(--font-body); cursor: pointer; } .ds-focus kbd { font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid var(--color-line); border-radius: 0.3rem; padding: 0.05rem 0.3rem; } .ds-focus[aria-pressed=\"true\"] { color: var(--color-accent-deep); border-color: color-mix(in oklab, var(--color-accent) 35%, transparent); } .ds-focus:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }"
+      "description": "Point-size ticks plus vertical nav.",
+      "html": "<aside class=\"ds-rail\"><p>ryo</p><ol><li>72</li><li>48</li></ol><nav><a aria-current=\"page\">Home</a><a>Posts</a></nav></aside>",
+      "css": ".ds-rail { width: 4.75rem; background: var(--color-rail); border-right: 1px solid var(--color-line); font-family: var(--font-mono); } .ds-rail ol { color: var(--color-muted); font-size: 0.65rem; } .ds-rail ol li:first-child { color: var(--color-accent); } .ds-rail a { color: var(--color-ink-soft); text-decoration: none; font-size: 0.62rem; } .ds-rail a[aria-current=\"page\"] { color: var(--color-accent); }"
     }
   ],
   "narrative": {
-    "northStar": "Quiet Mist Ink",
-    "overview": "A cool mist field with ink-teal accents. The room stays light, quiet, and slightly damp — not cream paper, not purple dusk, not a newspaper. Display type is a serif with a soft optical size (Fraunces); body is a Japanese gothic that can sit for 65ch. Chrome recedes; reading is the object.\n\nDepth comes from two faint radial washes and a sticky glass header, not from drop shadows. Motion is a single 320ms ease-out, and it collapses to zero under prefers-reduced-motion.",
+    "northStar": "活版 活字見本帳",
+    "overview": "The site is a foundry specimen sheet hung in north light: zinc plate, sumi, one vermilion proof mark. Changelog entries are cuts of the same face, largest first. The old mist-teal optical-serif room is an anti-reference.",
     "keyCharacteristics": [
-      "Mist ground + teal ink accent, never purple / cream-terracotta / broadsheet",
-      "Serif display / gothic body / mono meta",
-      "Measure ~65ch; large vertical rhythm",
-      "Pill actions, hairline ink borders, almost no shadow",
-      "Focus ring is the same teal as the accent"
+      "Zinc ground, sumi ink, vermilion proof only",
+      "Kaisei Decol display / BIZ UDPGothic body / Martian Mono point sizes",
+      "Off-centre 72–6pt rail as navigation",
+      "Square stamps, no pills, no drop shadows",
+      "Focus (R) rakes light; it does not add chrome"
     ],
     "rules": [
-      { "name": "The One Teal Rule", "body": "Teal is a voice, not a fill. Do not flood a viewport with accent background.", "section": "colors" },
-      { "name": "The No Purple Paper Rule", "body": "Do not introduce purple, cream-terracotta, or broadsheet cream. The token file already names these as rejects.", "section": "colors" },
-      { "name": "The Measure Rule", "body": "Continuous reading copy stays near 65ch. Lists and asides may run shorter (36–52ch), not wider.", "section": "typography" },
-      { "name": "The Flat-By-Default Rule", "body": "Do not add drop shadows to rest surfaces. If something needs to lift, mix mist with transparency and blur.", "section": "elevation" }
+      { "name": "The One Impression Rule", "body": "Do not polish entries into plaza metrics.", "section": "colors" },
+      { "name": "The One Vermilion Rule", "body": "Accent is a proof mark, never a fill.", "section": "colors" },
+      { "name": "The Measure Rule", "body": "Reading copy stays near 65ch.", "section": "typography" },
+      { "name": "The Staircase Rule", "body": "Recency is type size, not a badge.", "section": "typography" },
+      { "name": "The Flat Plate Rule", "body": "No glass pills, no drop shadows.", "section": "elevation" }
     ],
     "dos": [
-      "Do keep accent rare and teal.",
-      "Do set long reading copy to ~65ch with 1.75 body leading.",
-      "Do honor prefers-reduced-motion by zeroing --duration.",
-      "Do keep personal tools (Recall, Whisper, Focus) quiet and optional.",
-      "Do use hairlines and tonal washes instead of cards-with-shadows."
+      "Do let recency live in type size.",
+      "Do keep vermilion scarce.",
+      "Do rake light for Focus, hide chrome."
     ],
     "donts": [
-      "Don't add like counts, rank badges, or public metrics chrome.",
-      "Don't introduce purple, cream-terracotta, or broadsheet cream.",
-      "Don't add drop shadows as default elevation.",
-      "Don't stretch article measure past ~65ch to \"use the width\".",
-      "Don't invent a second accent hue for hover or errors without a real token."
+      "Don't restore mist, teal, Fraunces, or IBM Plex.",
+      "Don't use pills or equal-size cards as the page structure.",
+      "Don't add like counts or rank chrome.",
+      "Don't put an eyebrow above a heading."
     ]
   }
 }
