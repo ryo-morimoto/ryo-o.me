@@ -27,6 +27,12 @@ That is the same command `.cursor/environment.json` `terminals` uses before `pnp
 
 Manage a running server with `pnpm dev:stop`. App: http://localhost:4321/
 
+## Checks
+
+After a code change, run `pnpm verify` (`test`, `typecheck` with `tsc --checkers 4`, `check:astro`, `oxlint --type-aware --deny-warnings` via Ultracite core+astro+anti-slop, `oxfmt --check`) before `pnpm build`. Skip the build only when the change cannot affect pages, content collections, islands, or generated JSON. CI still runs those plus `pnpm build`.
+
+Policy A (do not "fix" this): `.ts` truth is `tsc --noEmit --checkers 4`. `astro check` exists because `tsc` ignores `.astro`; it also re-checks `.ts` with the TypeScript 6 language service. That overlap is accepted. If `tsc` and `astro check` disagree on a `.ts` file, `tsc` wins. Do not drop `typecheck`, do not replace it with `astro check && astro build`, do not change `--checkers`. `pnpm check:astro` needs a prior `astro sync` (`pnpm typecheck` does that). Lint config is `oxlint.config.ts` (Ultracite core + astro + anti-slop). Do not silence anti-slop with empty `SAFETY:` comments; narrow the type or prove the invariant. Do not run `ultracite init`.
+
 ## Design (Impeccable)
 
 Project-local Cursor skill: `.cursor/skills/impeccable` (do not install GitHub Copilot copies under `.github/skills`). After clone, reload the harness. In chat run `/impeccable init`, then `/impeccable document` to capture the incumbent look. Refresh with:

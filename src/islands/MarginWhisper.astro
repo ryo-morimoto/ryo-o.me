@@ -20,7 +20,7 @@ const { postId } = Astro.props;
 <script>
   class MarginWhisperEl extends HTMLElement {
     connectedCallback() {
-      if (this.dataset.ready) return;
+      if (this.dataset.ready) {return;}
       this.dataset.ready = '1';
       const start = () => this.#bind();
       if (document.readyState === 'loading') {
@@ -31,7 +31,7 @@ const { postId } = Astro.props;
     }
 
     #bind() {
-      const postId = this.dataset.postId;
+      const {postId} = this.dataset;
       const panel = this.querySelector('.whisper-panel');
       const textarea = this.querySelector('textarea');
       const save = this.querySelector('[data-action="save"]');
@@ -56,15 +56,24 @@ const { postId } = Astro.props;
         panel.hidden = true;
       };
 
+      const openPanel = (blockId: string) => {
+        openId = blockId;
+        textarea.value = localStorage.getItem(keyFor(blockId)) ?? "";
+        panel.hidden = false;
+        textarea.focus();
+      };
+
       save.addEventListener('click', () => {
-        if (openId) localStorage.setItem(keyFor(openId), textarea.value);
+        if (openId) {localStorage.setItem(keyFor(openId), textarea.value);}
         closePanel();
       });
       close.addEventListener('click', closePanel);
 
       const paras = [...root.querySelectorAll('p')].slice(0, 12);
-      paras.forEach((p, i) => {
-        if (p.dataset.whisperReady) return;
+      for (const [i, p] of paras.entries()) {
+        if (p.dataset.whisperReady) {
+          continue;
+        }
         p.dataset.whisperReady = '1';
         p.classList.add('whisper-host');
         const btn = document.createElement('button');
@@ -73,14 +82,9 @@ const { postId } = Astro.props;
         btn.textContent = '?';
         btn.setAttribute('aria-label', 'なぜ？メモを開く');
         const id = `p-${i}`;
-        btn.addEventListener('click', () => {
-          openId = id;
-          textarea.value = localStorage.getItem(keyFor(id)) ?? '';
-          panel.hidden = false;
-          textarea.focus();
-        });
-        p.appendChild(btn);
-      });
+        btn.addEventListener("click", () => openPanel(id));
+        p.append(btn);
+      }
     }
   }
 

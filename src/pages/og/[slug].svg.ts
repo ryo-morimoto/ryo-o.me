@@ -1,33 +1,33 @@
-import type { APIRoute } from 'astro';
-import { getPublishedPosts } from '../../lib/content';
-import { site } from '../../lib/site';
+import type { APIRoute } from "astro";
+
+import { getPublishedPosts } from "../../lib/content";
+import { site } from "../../lib/site";
 
 export const prerender = true;
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const posts = await getPublishedPosts();
   return [
-    { params: { slug: 'default' } },
+    { params: { slug: "default" } },
     ...posts.map((post) => ({ params: { slug: post.id } })),
   ];
-}
+};
 
-function escapeXml(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
-}
+const escapeXml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 
 export const GET: APIRoute = async ({ params }) => {
-  const slug = params.slug ?? 'default';
+  const slug = params.slug ?? "default";
   const posts = await getPublishedPosts();
   const post = posts.find((p) => p.id === slug);
 
   const title = post?.data.title ?? site.name;
   const description = post?.data.description ?? site.description;
-  const mark = post?.data.emoji ?? '✦';
+  const mark = post?.data.emoji ?? "✦";
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
@@ -48,8 +48,8 @@ export const GET: APIRoute = async ({ params }) => {
 
   return new Response(svg, {
     headers: {
-      'Content-Type': 'image/svg+xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=86400',
+      "Cache-Control": "public, max-age=86400",
+      "Content-Type": "image/svg+xml; charset=utf-8",
     },
   });
 };

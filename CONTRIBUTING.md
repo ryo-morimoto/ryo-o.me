@@ -33,14 +33,25 @@ pnpm dev:stop
 
 ## Checks
 
+Layers (cheapest correctness first):
+
 ```sh
-pnpm test
-pnpm typecheck
-pnpm build
+pnpm verify   # test + TS7 tsc --checkers 4 + astro check --noSync + oxlint --type-aware + oxfmt --check
+pnpm build    # HTML, content collections, a11y JSON — merge gate
 ```
 
-CI (`.github/workflows/ci.yml`, job `ci`) runs the same three commands after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
+`pnpm verify` is `pnpm test && pnpm typecheck && pnpm check:astro && pnpm lint && pnpm fmt:check`. Use it after a code change before paying for a full build.
 
-`pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
+Do not replace `pnpm typecheck` with `astro check`, and do not set `build` to `astro check && astro build`.
 
-`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`.
+Policy A: `.ts` truth is TypeScript 7 via `@typescript/native` (`tsc --noEmit --checkers 4`). `--checkers 4` is the compiler default, pinned so local and CI partition the same way; do not override it. `astro check` is in the loop because `tsc` ignores `.astro` files. It also type-checks `.ts` again through the TypeScript 6 language server (`typescript` is aliased to `@typescript/typescript6` so that API exists). The `.ts` overlap is accepted. If the two tools disagree on a `.ts` file, `tsc` wins.
+
+`pnpm check:astro` is `astro check --noSync`. Run it only after `pnpm typecheck` (or `astro sync`). `pnpm typecheck:tsc6` is comparison-only and is not the merge gate.
+
+`pnpm lint` is `oxlint --type-aware --deny-warnings` with `oxlint.config.ts` extending `ultracite/oxlint/core`, `ultracite/oxlint/astro`, and `ultracite/oxlint/anti-slop`. Type-aware linting is a correctness check. Do not silence anti-slop with empty `SAFETY:` comments; narrow the type or prove the invariant. `pnpm fmt` / `pnpm fmt:check` is Oxfmt via `oxfmt.config.ts` (`ultracite/oxfmt`). Format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` and vendored Cursor skills under `.cursor/` are not formatted. Do not run `ultracite init` (it rewrites agent/editor files). PascalCase `.astro` filenames stay; that rule is off for those files.
+
+CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, `pnpm check:astro`, `pnpm lint`, `pnpm fmt:check`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
+
+Unit tests cover pure helpers under `src/lib/` (file-level). Content collection schemas, MDX, islands, and generated routes are gated by `pnpm build`, not by the unit suite. If you change `src/content.config.ts`, `src/content/**`, or page/island templates, run `pnpm build` even when `pnpm verify` is green.
+
+CI does not retry failed steps.

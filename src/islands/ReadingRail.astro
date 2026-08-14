@@ -29,14 +29,14 @@ const { contentSelector = '#article-body' } = Astro.props;
 </reading-rail>
 
 <script>
-  type Heading = { id: string; text: string; level: number };
+  interface Heading { id: string; text: string; level: number }
 
   class ReadingRailEl extends HTMLElement {
     #observer: IntersectionObserver | null = null;
     #onScroll: (() => void) | null = null;
 
     connectedCallback() {
-      if (this.dataset.ready) return;
+      if (this.dataset.ready) {return;}
       this.dataset.ready = '1';
       const start = () => this.#bind();
       if (document.readyState === 'loading') {
@@ -74,8 +74,8 @@ const { contentSelector = '#article-body' } = Astro.props;
 
       const headings: Heading[] = [...root.querySelectorAll('h2[id], h3[id]')].map((el) => ({
         id: el.id,
-        text: el.textContent?.trim() ?? '',
         level: el.tagName === 'H3' ? 3 : 2,
+        text: el.textContent?.trim() ?? '',
       }));
 
       const setProgress = (value: number) => {
@@ -106,7 +106,7 @@ const { contentSelector = '#article-body' } = Astro.props;
         list.replaceChildren(
           ...headings.map((h) => {
             const li = document.createElement('li');
-            if (withLevel) li.dataset.level = String(h.level);
+            if (withLevel) {li.dataset.level = String(h.level);}
             const a = document.createElement('a');
             a.href = `#${h.id}`;
             a.textContent = h.text;
@@ -122,28 +122,40 @@ const { contentSelector = '#article-body' } = Astro.props;
       const setActive = (id: string) => {
         const label = headings.find((h) => h.id === id)?.text ?? 'この記事';
         mobileLabel.textContent = label;
-        this.querySelectorAll('nav.desktop li, .mobile-list a').forEach((el) => {
-          if (el instanceof HTMLElement) delete el.dataset.active;
-        });
-        desktopList.querySelectorAll('li').forEach((li) => {
-          const href = li.querySelector('a')?.getAttribute('href');
-          if (href === `#${id}`) li.dataset.active = 'true';
-        });
-        mobileList.querySelectorAll('a').forEach((a) => {
-          if (a.getAttribute('href') === `#${id}`) a.dataset.active = 'true';
-        });
+        for (const el of this.querySelectorAll(
+          "nav.desktop li, .mobile-list a"
+        )) {
+          if (el instanceof HTMLElement) {
+            delete el.dataset.active;
+          }
+        }
+        for (const li of desktopList.querySelectorAll("li")) {
+          const href = li.querySelector("a")?.getAttribute("href");
+          if (href === `#${id}`) {
+            li.dataset.active = "true";
+          }
+        }
+        for (const a of mobileList.querySelectorAll("a")) {
+          if (a.getAttribute("href") === `#${id}`) {
+            a.dataset.active = "true";
+          }
+        }
       };
 
       this.#observer = new IntersectionObserver(
         (entries) => {
           const visible = entries
             .filter((e) => e.isIntersecting)
-            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-          if (visible[0]?.target.id) setActive(visible[0].target.id);
+            .toSorted(
+              (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+            );
+          if (visible[0]?.target.id) {setActive(visible[0].target.id);}
         },
         { rootMargin: '-20% 0px -65% 0px', threshold: [0, 1] },
       );
-      root.querySelectorAll('h2[id], h3[id]').forEach((t) => this.#observer?.observe(t));
+      for (const t of root.querySelectorAll("h2[id], h3[id]")) {
+        this.#observer?.observe(t);
+      }
 
       mobileToggle.addEventListener('click', () => {
         const open = mobileList.hidden;
@@ -152,7 +164,7 @@ const { contentSelector = '#article-body' } = Astro.props;
       });
 
       mobileList.addEventListener('click', (e) => {
-        if (!(e.target instanceof HTMLAnchorElement)) return;
+        if (!(e.target instanceof HTMLAnchorElement)) {return;}
         mobileList.hidden = true;
         mobileToggle.setAttribute('aria-expanded', 'false');
       });
@@ -160,7 +172,7 @@ const { contentSelector = '#article-body' } = Astro.props;
 
     disconnectedCallback() {
       this.#observer?.disconnect();
-      if (this.#onScroll) window.removeEventListener('scroll', this.#onScroll);
+      if (this.#onScroll) {window.removeEventListener('scroll', this.#onScroll);}
     }
   }
 
