@@ -31,6 +31,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       # Cheap correctness first so a schema/unit failure does not pay for a build.
       - run: pnpm test
+      # .ts truth: TS7 tsc --checkers 4. astro check follows for .astro
+      # (it also re-checks .ts via TS6 LS; that overlap is policy A).
       - run: pnpm typecheck
       - run: pnpm check:astro
       - run: pnpm lint

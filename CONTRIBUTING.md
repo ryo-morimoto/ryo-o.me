@@ -42,9 +42,11 @@ pnpm build    # HTML, content collections, a11y JSON — merge gate
 
 `pnpm verify` is `pnpm test && pnpm typecheck && pnpm check:astro && pnpm lint && pnpm fmt:check`. Use it after a code change before paying for a full build.
 
-Do not replace `pnpm typecheck` with `astro check`, and do not set `build` to `astro check && astro build`. Authoritative `.ts` typecheck is TypeScript 7 via `@typescript/native` (`tsc --noEmit --checkers 4`). The `typescript` package stays aliased to `@typescript/typescript6` (JS API + `tsc6`) so `@astrojs/check` can load the Language Service. `pnpm check:astro` is `astro check --noSync` and covers `.astro` files that `tsc` ignores. Run it only after `pnpm typecheck` (or `astro sync`). `pnpm typecheck:tsc6` is comparison-only and is not the merge gate.
+Do not replace `pnpm typecheck` with `astro check`, and do not set `build` to `astro check && astro build`.
 
-`pnpm typecheck` runs `astro sync` then `tsc --noEmit --checkers 4`. The checker count is pinned in the script so local and CI partition files the same way. Do not override `--checkers` on the CLI.
+Policy A: `.ts` truth is TypeScript 7 via `@typescript/native` (`tsc --noEmit --checkers 4`). `--checkers 4` is the compiler default, pinned so local and CI partition the same way; do not override it. `astro check` is in the loop because `tsc` ignores `.astro` files. It also type-checks `.ts` again through the TypeScript 6 language server (`typescript` is aliased to `@typescript/typescript6` so that API exists). The `.ts` overlap is accepted. If the two tools disagree on a `.ts` file, `tsc` wins.
+
+`pnpm check:astro` is `astro check --noSync`. Run it only after `pnpm typecheck` (or `astro sync`). `pnpm typecheck:tsc6` is comparison-only and is not the merge gate.
 
 `pnpm lint` is `oxlint --type-aware --deny-warnings` (tsgolint). Type-aware linting is a correctness check. `pnpm fmt` / `pnpm fmt:check` is Oxfmt; format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` are not formatted.
 
