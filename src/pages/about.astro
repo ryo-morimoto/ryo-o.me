@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+
+export const prerender = true;
+---
+
+<BaseLayout title="About" description={`${site.name} について`}>
+  <section class="site-shell about">
+    <h1>About</h1>
+    <p class="lead">
+      {site.name}（ryo-o.me）の静かな部屋です。技術のメモと、生活の断片を同じ時間軸に置いています。
+    </p>
+    <p>
+      いいねやランキングはありません。感想はスタンプのレターだけ。購読は RSS
+      と、将来のひかえめな週次ダイジェストを想定しています。
+    </p>
+    <p>
+      スタックは Astro（コンテンツ）+ TanStack（読書の対話島）+ Cloudflare（エッジ）。依存は薄く、読む体験を厚く。
+    </p>
+    <p class="links">
+      <a href="/rss.xml">RSS を購読する</a>
+      <a href="/app">小さな実験場 (/app)</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: var(--space-8) 0;
+    max-width: 40rem;
+  }
+
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-2xl);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-ink-soft);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+</style>
