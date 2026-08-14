@@ -56,6 +56,16 @@ async function hashIp(ip: string): Promise<string> {
     .slice(0, 16);
 }
 
+export const GET: APIRoute = async () => {
+  return new Response(JSON.stringify({ error: 'POST のみ受け付けます' }), {
+    status: 405,
+    headers: {
+      Allow: 'POST',
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+  });
+};
+
 export const POST: APIRoute = async ({ request }) => {
   let body: LetterBody;
   try {

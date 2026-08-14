@@ -1,12 +1,27 @@
+## Prerequisites
+
+- Node.js `>=22.12.0` (see `.nvmrc`)
+- pnpm `10` (`packageManager` in `package.json`; Corepack: `corepack enable`)
+
+No `.env` or Cloudflare account is required to browse locally. Quiet Letter falls back to in-memory storage when D1/KV bindings are empty. IDs in `wrangler.jsonc` are placeholders until real Cloudflare resources exist.
+
 ## Development
 
-When starting the dev server, use background mode:
+Install from the repo root (requires the committed `pnpm-lock.yaml`):
 
 ```
-astro dev --background
+pnpm install --frozen-lockfile
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+When starting the dev server, use background mode via the package script (do not call `astro` from PATH; it is not installed globally):
+
+```
+pnpm dev:background
+```
+
+Manage the background server with `pnpm dev:stop`, `pnpm dev:status`, and `pnpm dev:logs`.
+
+Foreground equivalent (README): `pnpm dev` → http://localhost:4321/
 
 ## Documentation
 
