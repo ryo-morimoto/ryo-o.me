@@ -18,7 +18,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro sync && tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "dependencies": {

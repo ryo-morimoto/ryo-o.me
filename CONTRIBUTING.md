@@ -43,4 +43,4 @@ CI (`.github/workflows/ci.yml`, job `ci`) runs the same three commands after `pn
 
 `pnpm check` / `astro check` is not used: `@astrojs/check` still needs TypeScript's 6.x programmatic API, and this repo pins TypeScript 7.
 
-Optional: `pnpm generate-types` writes gitignored `worker-configuration.d.ts`. Typecheck uses `src/env.d.ts` stubs instead, so generate-types is not required for `pnpm typecheck`.
+`pnpm typecheck` runs `astro sync` first so `.astro/types.d.ts` exists (it is gitignored). Then `tsc --noEmit`.
