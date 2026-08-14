@@ -8,7 +8,7 @@ interface Props {
 const { entries } = Astro.props;
 ---
 
-ol class="changelog" aria-label="Changelog">
+<ol class="changelog" aria-label="Changelog">
   {
     entries.map((entry, i) => (
       <li class="changelog-item rise-in" style={`--delay: ${Math.min(i, 8) * 40}ms`}>
