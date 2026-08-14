@@ -1,0 +1,25 @@
+---
+title: Cloudflare の端で静かに動かす
+description: Astro の静的ページに、D1 の Quiet Letter と KV の控え目なレート制限を足す話。
+date: 2026-08-14
+tags: [cloudflare, astro, engineering]
+emoji: ☁️
+mood: 夜間ビルド
+related: [oshian-blog-notes, reading-as-a-room]
+threadOfSelf: 依存を薄くしたい季節。サーバは端に置き、本文は CDN の風で届くようにした。
+---
+
+個人サイトに必要な動的処理は、驚くほど少ない。
+
+感想レターの受付、レート制限、たまに画像。それ以外はビルド時に固めてしまってよい。Astro の Content Collections で型を付け、Cloudflare Workers で端だけを生かす。
+
+```ts
+// イメージ: レターは定型スタンプのみ受け付ける
+type Letter = { postId: string; stamp: string; createdAt: string };
+```
+
+## なぜ TanStack か
+
+Router と Query は、将来の小さなアプリ面（検索、メモ同期、管理）に伸びしろがある。いまは Reading Rail などの島として置き、コンテンツ配信の経路を汚さない。
+
+速さはおしゃんの一部だ。だが速さだけで人は好きにならない。静かさと、見つけたときの嬉しさが残るかどうか——そこを測る。
