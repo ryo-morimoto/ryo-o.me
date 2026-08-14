@@ -7,7 +7,12 @@ export default defineConfig({
   // anti-slop is on from the start: type assertions and value widening fail
   // the lint rather than wait for a later bug. Do not add empty SAFETY comments.
   extends: [core, astro, antiSlop],
-  ignorePatterns: [...(core.ignorePatterns ?? []), "src/content/**"],
+  ignorePatterns: [
+    ...(core.ignorePatterns ?? []),
+    "src/content/**",
+    // Vendored Cursor skills/agents (Impeccable, dmmulroy). Not app code.
+    ".cursor/**",
+  ],
   options: {
     typeAware: true,
   },
