@@ -1,3 +1,7 @@
+# Fresh packages (e.g. astro/tanstack on the same day) must still install in CI.
+minimumReleaseAge: 0
 allowBuilds:
   esbuild: true
   sharp: true
+  workerd: true
+  "@esbuild/linux-x64": true

@@ -2,10 +2,10 @@
   "name": "oshian-blog",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@10.33.3",
+  "packageManager": "pnpm@11.21.0",
   "engines": {
-    "node": ">=22.12.0",
-    "pnpm": ">=10"
+    "node": ">=24",
+    "pnpm": ">=11"
   },
   "scripts": {
     "dev": "astro dev",
@@ -41,13 +41,5 @@
   "devDependencies": {
     "@tanstack/router-plugin": "^1.168.31",
     "typescript": "^7.0.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "workerd",
-      "esbuild",
-      "sharp",
-      "@esbuild/linux-x64"
-    ]
   }
 }

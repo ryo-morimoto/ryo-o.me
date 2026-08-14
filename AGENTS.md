@@ -1,7 +1,7 @@
 ## Prerequisites
 
-- Node.js `>=22.12.0` (see `.nvmrc`)
-- pnpm `10` (`packageManager` in `package.json`; Corepack: `corepack enable`)
+- Node.js `>=24` (see `.nvmrc`)
+- pnpm `11` (`packageManager` in `package.json`; Corepack: `corepack enable`)
 
 No `.env` or Cloudflare account is required to browse locally. Quiet Letter falls back to in-memory storage when D1/KV bindings are empty. IDs in `wrangler.jsonc` are placeholders until real Cloudflare resources exist. Wrangler may log placeholder KV ids at compile time; that does not block local pages or `POST /api/letters`.
 

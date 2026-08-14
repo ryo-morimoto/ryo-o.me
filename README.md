@@ -12,8 +12,8 @@ Astro（コンテンツ）+ TanStack（読書の対話島）+ Cloudflare（エ�
 
 ## 必要環境
 
-- Node.js `>=22.12.0`（`.nvmrc` / `.node-version`）
-- pnpm `10`（`package.json` の `packageManager`。未導入なら `corepack enable`）
+- Node.js `>=24`（`.nvmrc` / `.node-version`）
+- pnpm `11`（`package.json` の `packageManager`。未導入なら `corepack enable`）
 
 シークレット、`.env`、Docker、Cloudflare アカウントは **ローカル閲覧には不要** です。
 

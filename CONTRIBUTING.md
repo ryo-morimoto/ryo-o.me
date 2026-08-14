@@ -2,8 +2,8 @@
 
 ## Cold start
 
-1. Install Node.js `>=22.12.0` (nvm / fnm will read `.nvmrc`).
-2. Enable pnpm 10 if needed: `corepack enable`.
+1. Install Node.js `>=24` (nvm / fnm will read `.nvmrc`).
+2. Enable pnpm 11 if needed: `corepack enable`.
 3. From the repository root:
 
 ```sh
