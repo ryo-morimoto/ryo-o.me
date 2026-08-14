@@ -17,7 +17,7 @@ If `pnpm install --frozen-lockfile` fails, the lockfile is out of date — regen
 
 ## Agent / background server
 
-`astro` is a local binary. Use package scripts, not a global `astro` on PATH:
+`astro` is a local binary. Use package scripts, not a global `astro` on PATH (ignore `astro dev stop|status|logs` printed by the Astro CLI):
 
 ```sh
 pnpm dev:background

@@ -3,7 +3,7 @@
 - Node.js `>=22.12.0` (see `.nvmrc`)
 - pnpm `10` (`packageManager` in `package.json`; Corepack: `corepack enable`)
 
-No `.env` or Cloudflare account is required to browse locally. Quiet Letter falls back to in-memory storage when D1/KV bindings are empty. IDs in `wrangler.jsonc` are placeholders until real Cloudflare resources exist.
+No `.env` or Cloudflare account is required to browse locally. Quiet Letter falls back to in-memory storage when D1/KV bindings are empty. IDs in `wrangler.jsonc` are placeholders until real Cloudflare resources exist. Wrangler may log placeholder KV ids at compile time; that does not block local pages or `POST /api/letters`.
 
 ## Development
 
@@ -13,15 +13,23 @@ Install from the repo root (requires the committed `pnpm-lock.yaml`):
 pnpm install --frozen-lockfile
 ```
 
-When starting the dev server, use background mode via the package script (do not call `astro` from PATH; it is not installed globally):
+Do not call `astro` from PATH; it is not installed globally. Always use the `pnpm` scripts below (including instead of any `astro dev …` lines printed by the Astro CLI).
+
+Check for an existing server first:
+
+```
+pnpm dev:status
+```
+
+If none is running, start in background mode:
 
 ```
 pnpm dev:background
 ```
 
-Manage the background server with `pnpm dev:stop`, `pnpm dev:status`, and `pnpm dev:logs`.
+Manage it with `pnpm dev:stop` and `pnpm dev:logs`. App: http://localhost:4321/
 
-Foreground equivalent (README): `pnpm dev` → http://localhost:4321/
+Cursor Cloud already starts a foreground `pnpm dev` via `.cursor/environment.json` `terminals`. Do not start a second server on port 4321.
 
 ## Documentation
 

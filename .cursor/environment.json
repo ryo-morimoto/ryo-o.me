@@ -4,7 +4,7 @@
     {
       "name": "dev",
       "command": "pnpm dev",
-      "description": "Astro dev server on http://localhost:4321"
+      "description": "Foreground Astro dev server (tmux). Do not also run pnpm dev:background on port 4321."
     }
   ]
 }
