@@ -15,21 +15,15 @@ pnpm install --frozen-lockfile
 
 Do not call `astro` from PATH; it is not installed globally. Always use the `pnpm` scripts below (including instead of any `astro dev …` lines printed by the Astro CLI).
 
-Check for an existing server first:
+Check for an existing server, then start if needed (one command; `pnpm dev:status` exits 0 even when idle, so do not use `status || background`):
 
 ```
-pnpm dev:status
+pnpm ensure-dev
 ```
 
-If none is running, start in background mode:
+That is the same command `.cursor/environment.json` `terminals` uses before `pnpm dev:logs`. Manage a running server with `pnpm dev:stop` and `pnpm dev:logs`. App: http://localhost:4321/
 
-```
-pnpm dev:background
-```
-
-Manage it with `pnpm dev:stop` and `pnpm dev:logs`. App: http://localhost:4321/
-
-Cursor Cloud (`.cursor/environment.json` `terminals`) uses the same scripts: status, then `pnpm dev:background` if needed, then `pnpm dev:logs`. Do not start a second server on port 4321.
+Do not start a second server on port 4321.
 
 ## Documentation
 

@@ -26,11 +26,10 @@ pnpm dev
 
 ブラウザで http://localhost:4321/ を開く。
 
-エージェント向けのバックグラウンド起動（PATH に `astro` は置かない。CLI が出す `astro dev stop` も使わず、次のスクリプトだけ使う）:
+エージェント向け（PATH に `astro` は置かない。CLI が出す `astro dev stop` も使わず、次のスクリプトだけ使う）。`pnpm dev:status` はサーバー未起動でも exit 0 なので、起動判定は `pnpm ensure-dev` を使う:
 
 ```sh
-pnpm dev:background
-pnpm dev:status
+pnpm ensure-dev
 pnpm dev:logs
 pnpm dev:stop
 ```
