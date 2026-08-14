@@ -27,6 +27,14 @@ That is the same command `.cursor/environment.json` `terminals` uses before `pnp
 
 Manage a running server with `pnpm dev:stop`. App: http://localhost:4321/
 
+## Design (Impeccable)
+
+Project-local Cursor skill: `.cursor/skills/impeccable` (do not install GitHub Copilot copies under `.github/skills`). After clone, reload the harness. In chat run `/impeccable init`, then `/impeccable document` to capture the incumbent look. Refresh with:
+
+```
+npx impeccable update --providers=cursor --scope=project -y
+```
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
