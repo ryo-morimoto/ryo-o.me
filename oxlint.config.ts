@@ -1,9 +1,12 @@
 import { defineConfig } from "oxlint";
+import antiSlop from "ultracite/oxlint/anti-slop";
 import astro from "ultracite/oxlint/astro";
 import core from "ultracite/oxlint/core";
 
 export default defineConfig({
-  extends: [core, astro],
+  // anti-slop is on from the start: type assertions and value widening fail
+  // the lint rather than wait for a later bug. Do not add empty SAFETY comments.
+  extends: [core, astro, antiSlop],
   ignorePatterns: [...(core.ignorePatterns ?? []), "src/content/**"],
   options: {
     typeAware: true,

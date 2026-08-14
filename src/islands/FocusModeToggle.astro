@@ -37,9 +37,17 @@ const KEY = 'oshian:focus-mode';
 
       this.#button.addEventListener('click', toggle);
       this.#onKey = (e: KeyboardEvent) => {
-        const t = e.target as HTMLElement | null;
-        if (!t) {return;}
-        if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) {return;}
+        if (!(e.target instanceof HTMLElement)) {
+          return;
+        }
+        const t = e.target;
+        if (
+          t.tagName === "INPUT" ||
+          t.tagName === "TEXTAREA" ||
+          t.isContentEditable
+        ) {
+          return;
+        }
         if (e.key === 'r' || e.key === 'R') {
           e.preventDefault();
           toggle();

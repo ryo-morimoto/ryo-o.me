@@ -71,11 +71,11 @@ export const relatedPosts = (
   return [...byId, ...byTag].slice(0, limit);
 };
 
-export const kindLabel: Record<ChangelogKind, string> = {
+export const kindLabel = {
   life: "Life",
   note: "Note",
   oss: "OSS",
   post: "Post",
   release: "Release",
   talk: "Talk",
-};
+} as const satisfies Record<ChangelogKind, string>;

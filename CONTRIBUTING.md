@@ -48,7 +48,7 @@ Policy A: `.ts` truth is TypeScript 7 via `@typescript/native` (`tsc --noEmit --
 
 `pnpm check:astro` is `astro check --noSync`. Run it only after `pnpm typecheck` (or `astro sync`). `pnpm typecheck:tsc6` is comparison-only and is not the merge gate.
 
-`pnpm lint` is `oxlint --type-aware --deny-warnings` with `oxlint.config.ts` extending `ultracite/oxlint/core` and `ultracite/oxlint/astro`. Type-aware linting is a correctness check. `pnpm fmt` / `pnpm fmt:check` is Oxfmt via `oxfmt.config.ts` (`ultracite/oxfmt`). Format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` are not formatted. Do not run `ultracite init` (it rewrites agent/editor files). PascalCase `.astro` filenames stay; that rule is off for those files.
+`pnpm lint` is `oxlint --type-aware --deny-warnings` with `oxlint.config.ts` extending `ultracite/oxlint/core`, `ultracite/oxlint/astro`, and `ultracite/oxlint/anti-slop`. Type-aware linting is a correctness check. Do not silence anti-slop with empty `SAFETY:` comments; narrow the type or prove the invariant. `pnpm fmt` / `pnpm fmt:check` is Oxfmt via `oxfmt.config.ts` (`ultracite/oxfmt`). Format-on-save is in `.vscode/settings.json`. Authored posts under `src/content/` are not formatted. Do not run `ultracite init` (it rewrites agent/editor files). PascalCase `.astro` filenames stay; that rule is off for those files.
 
 CI (`.github/workflows/ci.yml`, job `ci`) runs `pnpm test`, `pnpm typecheck`, `pnpm check:astro`, `pnpm lint`, `pnpm fmt:check`, then `pnpm build` after `pnpm install --frozen-lockfile`. The a11y JSON must exist under `dist/` or the job fails.
 
